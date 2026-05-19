@@ -20,7 +20,15 @@ const limiter = rateLimit({
   max: 100, // limit each IP to 100 requests per windowMs
   message: { success: false, error: 'Too many requests, please try again later.' }
 });
+
+const aiLimiter = rateLimit({
+  windowMs: 10 * 60 * 1000, // 10 minutes
+  max: 15, // limit each IP to 15 AI requests per 10 minutes
+  message: { success: false, error: 'AI API quota exceeded for this IP. Please wait a few minutes before simulating again.' }
+});
+
 app.use('/api', limiter);
+app.use('/api/ai', aiLimiter);
 
 app.use(express.json({ limit: '5mb' }));
 app.use(express.urlencoded({ extended: true, limit: '5mb' }));
