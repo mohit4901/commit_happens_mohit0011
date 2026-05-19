@@ -6,12 +6,6 @@ A supply chain vulnerability visualizer for security teams. Paste your tech stac
 
 ---
 
-## Live Demo
-
-🔗 **[vulnmap.vercel.app](https://vulnmap.vercel.app)** ← Frontend  
-🔗 **[vulnmap-api.railway.app](https://vulnmap-api.railway.app)** ← Backend API
-
----
 
 ## The Problem
 

@@ -1,0 +1,10 @@
+{
+  "stackName": "Demo Company — E-Commerce Platform",
+  "packages": [
+    {"name": "lodash", "version": "4.17.4", "type": "npm"},
+    {"name": "axios", "version": "0.21.0", "type": "npm"},
+    {"name": "express", "version": "4.17.1", "type": "npm"},
+    {"name": "django", "version": "3.0.0", "type": "PyPI"},
+    {"name": "log4j-core", "version": "2.14.1", "type": "Maven"}
+  ]
+}
