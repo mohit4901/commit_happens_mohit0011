@@ -86,11 +86,11 @@ const Landing = () => {
           </div>
 
           {/* Right Column (Fingerprint) */}
-          <div className="relative flex items-center justify-center p-8 bg-vulnmap-dark/30 border-l border-vulnmap-border">
+          <div className="relative flex items-center justify-center p-8 bg-transparent dark:bg-vulnmap-dark/30 border-l border-vulnmap-border">
             <img 
               src="/fingerprint.png" 
               alt="Digital Fingerprint" 
-              className="max-h-[500px] object-contain dark:mix-blend-screen mix-blend-multiply opacity-90 dark:opacity-80 invert dark:invert-0 animate-[pulse_4s_ease-in-out_infinite]"
+              className="max-h-[500px] object-contain dark:mix-blend-screen mix-blend-multiply opacity-100 dark:opacity-80 invert dark:invert-0 animate-[pulse_4s_ease-in-out_infinite]"
             />
             
             {/* Trusted By - Absolute positioned at bottom right */}
