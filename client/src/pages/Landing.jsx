@@ -438,12 +438,74 @@ const Landing = () => {
         </section>
 
         {/* Footer */}
-        <footer className="border-t border-vulnmap-border pt-8 pb-12 flex flex-col md:flex-row justify-between items-center text-sm font-mono text-gray-400 dark:text-gray-500">
-          <div>© {new Date().getFullYear()} DFX Security. Built for the Commit Happens Hackathon.</div>
-          <div className="flex gap-4 mt-4 md:mt-0">
-            <a href="#" className="hover:text-brand-green transition">Privacy Policy</a>
-            <a href="#" className="hover:text-brand-green transition">Terms of Service</a>
-            <a href="https://github.com/mohit4901/commit_happens_mohit0011" target="_blank" rel="noreferrer" className="hover:text-brand-green transition">GitHub</a>
+        <footer className="border-t border-vulnmap-border pt-16 pb-12 mt-12 font-mono text-xs">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16 text-left">
+            
+            {/* Column 1: Brand Info */}
+            <div className="lg:col-span-2">
+              <Link to="/" className="text-2xl font-bold tracking-widest text-brand-primary mb-4 block">DFX SECURITY</Link>
+              <p className="text-gray-500 dark:text-gray-400 leading-relaxed max-w-sm mb-6 font-sans">
+                Next-generation automated threat intelligence, attack path simulation, and trust-chain depth mapping for modern cloud software architectures.
+              </p>
+              {/* Telemetry Status Indicator */}
+              <div className="inline-flex items-center gap-2 border border-brand-primary/20 bg-brand-primary/5 px-3 py-1.5 rounded-sm">
+                <span className="w-2 h-2 rounded-full bg-brand-primary animate-pulse"></span>
+                <span className="text-brand-primary font-bold text-[10px] tracking-widest uppercase">ALL SIMULATIONS ONLINE</span>
+              </div>
+            </div>
+
+            {/* Column 2: Platform Links */}
+            <div>
+              <h4 className="text-brand-text font-bold mb-4 uppercase tracking-wider text-[11px] border-b border-vulnmap-border pb-2">Threat Engine</h4>
+              <ul className="space-y-2.5 text-gray-500 dark:text-gray-400">
+                <li><Link to="/scan" className="hover:text-brand-primary transition">Dependency Scanner</Link></li>
+                <li><Link to="/scan" className="hover:text-brand-primary transition">Attack Simulation</Link></li>
+                <li><Link to="/pricing" className="hover:text-brand-primary transition">Enterprise Pricing</Link></li>
+                <li><a href="#" className="hover:text-brand-primary transition">CVE Threat Database</a></li>
+              </ul>
+            </div>
+
+            {/* Column 3: Resources Links */}
+            <div>
+              <h4 className="text-brand-text font-bold mb-4 uppercase tracking-wider text-[11px] border-b border-vulnmap-border pb-2">Resources</h4>
+              <ul className="space-y-2.5 text-gray-500 dark:text-gray-400">
+                <li><Link to="/case-studies" className="hover:text-brand-primary transition">Case Studies</Link></li>
+                <li><Link to="/services" className="hover:text-brand-primary transition">Consulting Services</Link></li>
+                <li><Link to="/industries" className="hover:text-brand-primary transition">Supported Sectors</Link></li>
+                <li><a href="https://github.com/mohit4901/commit_happens_mohit0011" target="_blank" rel="noreferrer" className="hover:text-brand-primary transition">Hackathon Repo</a></li>
+              </ul>
+            </div>
+
+            {/* Column 4: Compliance/Contact */}
+            <div>
+              <h4 className="text-brand-text font-bold mb-4 uppercase tracking-wider text-[11px] border-b border-vulnmap-border pb-2">Contact & Audit</h4>
+              <ul className="space-y-2.5 text-gray-500 dark:text-gray-400">
+                <li><Link to="/contact" className="hover:text-brand-primary transition">Support Channel</Link></li>
+                <li><span className="text-gray-400 select-all cursor-copy">contact@dfxsec.com</span></li>
+                <li><span className="text-[10px] text-gray-600 block mt-2">PGP FINGERPRINT:</span></li>
+                <li className="text-[9px] text-brand-primary font-bold overflow-hidden text-ellipsis whitespace-nowrap">8F3E A0A2 B9C1 D7F2</li>
+              </ul>
+            </div>
+
+          </div>
+
+          {/* Bottom Telemetry Bar */}
+          <div className="border-t border-vulnmap-border pt-8 flex flex-col md:flex-row justify-between items-center text-gray-500 gap-4">
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-[10px] text-gray-600">
+              <span>© {new Date().getFullYear()} DFX SECURITY. ALL RIGHTS RESERVED.</span>
+              <span className="hidden md:inline text-vulnmap-border">|</span>
+              <span className="hover:text-brand-primary cursor-default">CORE: V2.4.9</span>
+              <span className="hidden md:inline text-vulnmap-border">|</span>
+              <span className="hover:text-brand-primary cursor-default">LATENCY: 9MS</span>
+              <span className="hidden md:inline text-vulnmap-border">|</span>
+              <span className="hover:text-brand-primary cursor-default text-brand-primary font-semibold">INTEGRITY: SECURE</span>
+            </div>
+            
+            <div className="flex gap-6 text-[11px]">
+              <a href="#" className="hover:text-brand-primary transition">Privacy Protocol</a>
+              <a href="#" className="hover:text-brand-primary transition">Audit Terms</a>
+              <a href="https://github.com/mohit4901/commit_happens_mohit0011" target="_blank" rel="noreferrer" className="hover:text-brand-primary transition">GitHub</a>
+            </div>
           </div>
         </footer>
 
