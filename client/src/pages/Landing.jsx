@@ -69,6 +69,74 @@ const TencentLogo = () => (
   </div>
 );
 
+const TerminalDemo = () => {
+  const [lines, setLines] = React.useState([]);
+  
+  React.useEffect(() => {
+    const allLogs = [
+      { text: "DFX Core initialising...", type: "info" },
+      { text: "Establishing secure link to NVD & OSV databases...", type: "info" },
+      { text: "Connection verified // status: 200 OK", type: "success" },
+      { text: "Analyzing system telemetry...", type: "info" },
+      { text: "Ingesting CycloneDX SBOM definition...", type: "info" },
+      { text: "Mapping nested trust-chain linkages (Depth 4)...", type: "info" },
+      { text: "[WARN] Transitive vulnerability found in nested lodash (v4.17.20) -> CVE-2020-8203", type: "warn" },
+      { text: "[ALERT] Threat Vector Discovered: public_gateway → main_api → lodash.merge → RCE", type: "error" },
+      { text: "Spawning NVIDIA NIM agent model for attack path simulation...", type: "info" },
+      { text: "Simulating 1,200 mock threat actor interactions...", type: "info" },
+      { text: "Attack path simulated successfully // 84% probability of containment bypass", type: "error" },
+      { text: "Mitigation roadmap generated: Upgrade lodash to version 4.17.21+", type: "success" },
+      { text: "Generating board-ready PDF security audit report...", type: "info" },
+      { text: "Threat graph compilation complete. Shield online.", type: "success" }
+    ];
+
+    let currentIdx = 0;
+    setLines([allLogs[0]]);
+
+    const timer = setInterval(() => {
+      currentIdx++;
+      if (currentIdx < allLogs.length) {
+        setLines(prev => [...prev, allLogs[currentIdx]]);
+      } else {
+        currentIdx = 0;
+        setLines([allLogs[0]]);
+      }
+    }, 1500);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="border border-vulnmap-border bg-[#030508] p-5 mb-16 text-left font-mono text-[11px] leading-relaxed shadow-2xl rounded-sm w-full relative overflow-hidden">
+      {/* Glossy top gradient */}
+      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-brand-primary to-transparent opacity-60"></div>
+      
+      <div className="flex items-center justify-between border-b border-vulnmap-border pb-3 mb-4">
+        <div className="flex gap-1.5">
+          <span className="w-2.5 h-2.5 rounded-full bg-risk-critical"></span>
+          <span className="w-2.5 h-2.5 rounded-full bg-risk-high animate-pulse"></span>
+          <span className="w-2.5 h-2.5 rounded-full bg-brand-primary"></span>
+        </div>
+        <span className="text-[9px] text-gray-500 tracking-widest font-bold">DFX LIVE SIMULATION TERMINAL</span>
+      </div>
+      <div className="space-y-1.5 h-56 overflow-y-auto custom-scrollbar select-none pr-2">
+        {lines.map((line, idx) => {
+          let color = "text-gray-400";
+          if (line.type === "success") color = "text-brand-primary font-bold";
+          if (line.type === "warn") color = "text-risk-high font-bold";
+          if (line.type === "error") color = "text-risk-critical font-semibold";
+          return (
+            <div key={idx} className="flex gap-2 items-start animate-[fadeIn_0.2s_ease-out_forwards]">
+              <span className="text-gray-600 select-none">[{new Date().toLocaleTimeString()}]</span>
+              <span className={color}>{line.text}</span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
 const Landing = () => {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
@@ -192,6 +260,9 @@ const Landing = () => {
             <TencentLogo />
           </div>
         </div>
+
+        {/* Live Attack Path Scanning Terminal Simulator */}
+        <TerminalDemo />
 
         {/* Core Value Statement Section */}
         <section className="mb-24 py-12 border-b border-vulnmap-border">
