@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Shield, Sun, Moon } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import ScrollRevealText from '../components/ScrollRevealText';
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -117,9 +118,8 @@ const Landing = () => {
 
         {/* Core Value Statement Section */}
         <section className="mb-24 py-12 border-b border-vulnmap-border">
-          <p className="text-2xl md:text-3xl lg:text-4xl font-sans font-light leading-relaxed max-w-4xl text-gray-400 dark:text-gray-500">
-            <span className="text-brand-text font-semibold">We’ve helped businesses eliminate critical vulnerabilities,</span>{' '}
-            respond to breaches in record time, and achieve full regulatory compliance — delivering precise, high-impact security solutions where they matter most.
+          <p className="text-2xl md:text-3xl lg:text-4xl font-sans leading-relaxed max-w-4xl">
+            <ScrollRevealText text="We’ve helped businesses eliminate critical vulnerabilities, respond to breaches in record time, and achieve full regulatory compliance — delivering precise, high-impact security solutions where they matter most." />
           </p>
         </section>
 
