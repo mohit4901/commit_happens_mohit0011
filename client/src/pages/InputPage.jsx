@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useScan } from '../context/ScanContext';
-import { UploadCloud, Plus, X, Loader2 } from 'lucide-react';
+import { UploadCloud, Plus, X, Loader2, Code, ShieldAlert } from 'lucide-react';
 import sampleStackData from '../../../demo/sample-stack.json';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
 const InputPage = () => {
   const navigate = useNavigate();
@@ -62,15 +62,18 @@ const InputPage = () => {
       reader.onload = (event) => {
         try {
           const json = JSON.parse(event.target.result);
-          if (json.stackName) setStackNameLocal(json.stackName);
+          if (json.name) setStackNameLocal(json.name);
           if (json.packages) setPackages(json.packages);
-          else if (json.dependencies) {
-            const deps = Object.keys(json.dependencies).map(name => ({
+          else if (json.dependencies || json.devDependencies) {
+            const deps = json.dependencies || {};
+            const devDeps = json.devDependencies || {};
+            const allDeps = { ...deps, ...devDeps };
+            const parsedDeps = Object.keys(allDeps).map(name => ({
               name,
-              version: json.dependencies[name].replace(/[\^~]/g, ''),
+              version: allDeps[name].replace(/[\^~><=]/g, '').split(' ')[0],
               type: 'npm'
             }));
-            setPackages(deps.slice(0, 15));
+            setPackages(parsedDeps.slice(0, 15));
           }
         } catch (err) {
           setError('Invalid JSON file');
@@ -93,7 +96,7 @@ const InputPage = () => {
       if (file && packages.length === 0) {
         const formData = new FormData();
         formData.append('file', file);
-        formData.append('stackName', stackNameLocal);
+        formData.append('stackName', stackNameLocal || 'Uploaded Stack');
         response = await fetch(`${API_URL}/api/scan`, {
           method: 'POST',
           body: formData,
@@ -125,108 +128,137 @@ const InputPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-vulnmap-dark">
-        <Loader2 className="w-16 h-16 text-risk-critical animate-spin mb-4" />
-        <h2 className="text-2xl font-semibold">Fetching CVE data...</h2>
-        <p className="text-gray-400 mt-2">Analyzing vulnerability chain across NVD and OSV databases.</p>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-vulnmap-dark font-mono text-center px-4">
+        <Loader2 className="w-16 h-16 text-brand-green animate-spin mb-6" />
+        <h2 className="text-2xl font-bold mb-2">SCANNING YOUR STACK</h2>
+        <p className="text-gray-400 max-w-md mx-auto">Querying National Vulnerability Database (NVD) & OSV... Mapping dependencies... Calling NVIDIA NIM for attack path simulation...</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen p-6 md:p-12 bg-vulnmap-dark">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex items-center gap-2 mb-8 cursor-pointer" onClick={() => navigate('/')}>
-          <div className="w-8 h-8 rounded-full bg-risk-critical flex items-center justify-center">
-            <span className="text-white font-bold text-xl">V</span>
-          </div>
-          <h1 className="text-2xl font-bold">VulnMap</h1>
+    <div className="min-h-screen bg-vulnmap-dark text-white font-sans flex flex-col items-center">
+      <div className="w-full max-w-7xl p-4 lg:p-8">
+        
+        {/* Minimal Navbar */}
+        <nav className="flex justify-between items-center py-5 px-6 border border-vulnmap-border mb-12">
+          <Link to="/" className="text-3xl font-mono tracking-widest font-bold hover:text-brand-green transition">DFX</Link>
+          <div className="text-sm font-mono text-brand-green border border-brand-green px-4 py-1 rounded-full">Secure Scan Mode</div>
+        </nav>
+
+        <div className="mb-12 text-center">
+          <h1 className="text-4xl lg:text-5xl font-mono font-bold mb-4 uppercase">Upload Your Stack</h1>
+          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            Drag and drop your project's <code className="bg-vulnmap-card border border-vulnmap-border px-2 py-0.5 rounded">package.json</code> file to instantly visualize vulnerabilities and attack paths in your dependencies.
+          </p>
         </div>
 
-        <h2 className="text-3xl font-bold mb-8">Define Your Tech Stack</h2>
-        {error && <div className="bg-risk-critical/20 text-risk-critical p-4 rounded mb-6 border border-risk-critical/50">{error}</div>}
+        {error && (
+          <div className="bg-risk-critical/10 text-risk-critical p-4 rounded-xl mb-8 border border-risk-critical/50 flex items-center gap-3 max-w-4xl mx-auto">
+            <ShieldAlert className="w-6 h-6" />
+            <span className="font-mono">{error}</span>
+          </div>
+        )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-          <div className="bg-vulnmap-card p-6 rounded-xl border border-vulnmap-border">
-            <h3 className="text-xl font-semibold mb-4">Manual Entry</h3>
-            <div className="mb-4">
-              <label className="block text-sm text-gray-400 mb-1">Stack Name</label>
-              <input 
-                type="text" 
-                className="w-full bg-vulnmap-dark border border-vulnmap-border rounded p-2 text-white outline-none focus:border-risk-critical"
-                placeholder="e.g. Core Banking API"
-                value={stackNameLocal}
-                onChange={(e) => setStackNameLocal(e.target.value)}
-              />
-            </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+          {/* File Upload Area */}
+          <div className="bg-[#0a0a0a] p-8 lg:p-12 border border-vulnmap-border flex flex-col items-center justify-center relative hover:border-brand-green transition-colors group cursor-pointer"
+               onDragOver={(e) => e.preventDefault()}
+               onDrop={handleFileDrop}
+               onClick={() => document.getElementById('fileUpload').click()}>
+            <div className="absolute inset-0 bg-brand-green/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
             
-            <div className="flex gap-2 mb-4">
-              <input type="text" placeholder="Package name" className="flex-1 bg-vulnmap-dark border border-vulnmap-border rounded p-2 outline-none focus:border-risk-critical" value={pkgName} onChange={(e)=>setPkgName(e.target.value)} />
-              <input type="text" placeholder="Version" className="w-24 bg-vulnmap-dark border border-vulnmap-border rounded p-2 outline-none focus:border-risk-critical" value={pkgVersion} onChange={(e)=>setPkgVersion(e.target.value)} />
-              <select className="bg-vulnmap-dark border border-vulnmap-border rounded p-2 outline-none focus:border-risk-critical" value={pkgEcosystem} onChange={(e)=>setPkgEcosystem(e.target.value)}>
-                <option value="npm">npm</option>
-                <option value="PyPI">PyPI</option>
-                <option value="Maven">Maven</option>
-                <option value="Go">Go</option>
-                <option value="crates.io">Cargo</option>
-              </select>
-              <button onClick={handleAddPackage} className="bg-vulnmap-border p-2 rounded hover:bg-gray-700 transition"><Plus /></button>
-            </div>
+            <UploadCloud className="w-16 h-16 text-gray-500 group-hover:text-brand-green transition-colors mb-6 z-10" />
+            <h3 className="text-2xl font-bold mb-2 z-10">Drag & Drop</h3>
+            <p className="text-gray-400 text-center mb-6 z-10">
+              your package.json or click to browse
+            </p>
+            
+            <input 
+              id="fileUpload" 
+              type="file" 
+              className="hidden" 
+              accept=".json,application/json"
+              onChange={(e) => {
+                if(e.target.files[0]) {
+                  setFile(e.target.files[0]);
+                  const reader = new FileReader();
+                  reader.onload = (ev) => {
+                    try {
+                      const json = JSON.parse(ev.target.result);
+                      if(json.dependencies || json.devDependencies) {
+                        const deps = json.dependencies || {};
+                        const devDeps = json.devDependencies || {};
+                        const allDeps = { ...deps, ...devDeps };
+                        const parsedDeps = Object.keys(allDeps).map(name => ({
+                          name,
+                          version: allDeps[name].replace(/[\^~><=]/g, '').split(' ')[0],
+                          type: 'npm'
+                        }));
+                        setPackages(parsedDeps.slice(0, 15));
+                      }
+                      if(json.name) setStackNameLocal(json.name);
+                    } catch(err){}
+                  };
+                  reader.readAsText(e.target.files[0]);
+                }
+              }} 
+            />
 
-            <div className="flex flex-wrap gap-2">
+            {file ? (
+              <div className="bg-brand-green/20 border border-brand-green text-brand-green px-6 py-2 font-mono text-sm z-10">
+                ✅ Loaded: {file.name}
+              </div>
+            ) : (
+              <div className="border border-vulnmap-border px-6 py-2 font-mono text-sm text-gray-500 z-10 bg-[#050505]">
+                No file selected
+              </div>
+            )}
+          </div>
+
+          {/* Example Code Snippet Area */}
+          <div className="bg-[#0a0a0a] p-8 border border-vulnmap-border flex flex-col">
+            <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+              <Code className="w-5 h-5 text-brand-green" /> What we look for
+            </h3>
+            <p className="text-gray-400 text-sm mb-6">We parse your dependencies and check exact versions against real CVE databases.</p>
+            
+            <div className="bg-[#050505] border border-vulnmap-border p-4 font-mono text-sm text-gray-300 overflow-x-auto flex-1 rounded">
+              <pre>
+{`{
+  "name": "my-enterprise-app",
+  "version": "1.0.0",
+  "dependencies": {
+    "lodash": "4.17.4",     `} <span className="text-risk-critical">← High Risk (CVE-2021-23337)</span>{`
+    "log4j-core": "2.14.1", `} <span className="text-risk-critical">← Critical (Log4Shell)</span>{`
+    "axios": "0.21.0"       `} <span className="text-risk-high">← High Risk (SSRF)</span>{`
+  }
+}`}
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        {/* Manual Entry Section (Optional) */}
+        {packages.length > 0 && (
+          <div className="bg-[#0a0a0a] p-6 border border-vulnmap-border mb-12">
+            <h3 className="text-xl font-bold mb-4 font-mono text-brand-green">Parsed Packages ({packages.length}/15 max)</h3>
+            <div className="flex flex-wrap gap-3">
               {packages.map((pkg, i) => (
-                <div key={i} className="flex items-center gap-2 bg-vulnmap-dark border border-vulnmap-border px-3 py-1 rounded-full text-sm">
-                  <span>{pkg.name}@{pkg.version}</span>
-                  <span className="text-gray-500 text-xs">{pkg.type}</span>
-                  <X className="w-3 h-3 cursor-pointer hover:text-risk-critical" onClick={() => handleRemovePackage(i)} />
+                <div key={i} className="flex items-center gap-2 bg-[#050505] border border-vulnmap-border px-4 py-2 text-sm font-mono">
+                  <span>{pkg.name} <span className="text-gray-500">v{pkg.version}</span></span>
+                  <X className="w-4 h-4 cursor-pointer hover:text-risk-critical transition-colors" onClick={() => handleRemovePackage(i)} />
                 </div>
               ))}
             </div>
           </div>
-
-          <div className="bg-vulnmap-card p-6 rounded-xl border border-vulnmap-border flex flex-col">
-            <h3 className="text-xl font-semibold mb-4">JSON / SBOM Upload</h3>
-            <div 
-              className="flex-1 border-2 border-dashed border-vulnmap-border rounded-xl flex flex-col items-center justify-center p-8 bg-vulnmap-dark/50 hover:bg-vulnmap-dark transition cursor-pointer"
-              onDragOver={(e) => e.preventDefault()}
-              onDrop={handleFileDrop}
-              onClick={() => document.getElementById('fileUpload').click()}
-            >
-              <UploadCloud className="w-12 h-12 text-gray-500 mb-4" />
-              <p className="text-center text-gray-400">
-                Drop your package.json, requirements.txt export, or SBOM JSON here.<br/>
-                <span className="text-sm">Or click to browse</span>
-              </p>
-              <input 
-                id="fileUpload" 
-                type="file" 
-                className="hidden" 
-                accept=".json,application/json"
-                onChange={(e) => {
-                  if(e.target.files[0]) {
-                    setFile(e.target.files[0]);
-                    const reader = new FileReader();
-                    reader.onload = (ev) => {
-                      try {
-                        const json = JSON.parse(ev.target.result);
-                        if(json.packages) setPackages(json.packages);
-                        if(json.stackName) setStackNameLocal(json.stackName);
-                      } catch(e){}
-                    };
-                    reader.readAsText(e.target.files[0]);
-                  }
-                }} 
-              />
-            </div>
-            {file && <div className="mt-4 text-center text-risk-low font-semibold">Loaded: {file.name}</div>}
-          </div>
-        </div>
+        )}
 
         <button 
           onClick={handleSubmit}
-          className="w-full py-4 bg-risk-critical hover:bg-red-700 text-white font-bold rounded-xl text-xl transition-colors shadow-lg"
+          className="w-full py-5 bg-brand-green hover:bg-green-400 text-black font-mono font-bold text-xl transition-colors tracking-widest shadow-[0_0_20px_rgba(0,255,65,0.3)]"
         >
-          Analyze Vulnerabilities →
+          ANALYZE VULNERABILITIES NOW →
         </button>
       </div>
     </div>
