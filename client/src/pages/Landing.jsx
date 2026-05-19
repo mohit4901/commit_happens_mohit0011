@@ -24,7 +24,7 @@ const Landing = () => {
           <div className="hidden md:flex gap-8 font-mono text-sm text-gray-300 tracking-wider">
             <Link to="/services" className="hover:text-brand-green transition">Services</Link>
             <Link to="/industries" className="hover:text-brand-green transition">Industries</Link>
-            <Link to="/services" className="hover:text-brand-green transition">Case Studies</Link>
+            <Link to="/case-studies" className="hover:text-brand-green transition">Case Studies</Link>
             <Link to="/pricing" className="hover:text-brand-green transition">Pricing</Link>
             <Link to="/contact" className="hover:text-brand-green transition">Contact</Link>
           </div>
