@@ -41,7 +41,7 @@ const Landing = () => {
               {theme === 'dark' ? <Sun className="w-4.5 h-4.5" /> : <Moon className="w-4.5 h-4.5" />}
             </button>
             <button 
-              onClick={handleDemo}
+              onClick={() => navigate('/scan')}
               className="bg-brand-green text-white dark:text-black px-6 py-2 font-mono font-bold hover:bg-brand-green-hover transition"
             >
               GET A DEMO
@@ -71,7 +71,7 @@ const Landing = () => {
 
             <div className="flex flex-wrap gap-4">
               <button 
-                onClick={handleDemo}
+                onClick={() => navigate('/scan')}
                 className="bg-brand-green text-white dark:text-black px-8 py-4 font-mono font-bold hover:bg-brand-green-hover transition"
               >
                 START FREE SCAN
@@ -90,7 +90,7 @@ const Landing = () => {
             <img 
               src="/fingerprint.png" 
               alt="Digital Fingerprint" 
-              className="max-h-[500px] object-contain dark:mix-blend-screen mix-blend-multiply opacity-90 dark:opacity-80 animate-[pulse_4s_ease-in-out_infinite]"
+              className="max-h-[500px] object-contain dark:mix-blend-screen mix-blend-multiply opacity-90 dark:opacity-80 invert dark:invert-0 animate-[pulse_4s_ease-in-out_infinite]"
             />
             
             {/* Trusted By - Absolute positioned at bottom right */}
