@@ -1,24 +1,26 @@
 const fetch = require('node-fetch'); // we can just use native fetch in node 18+
 
-async function callAnthropic(systemPrompt, userPrompt) {
-  if (!process.env.ANTHROPIC_API_KEY) throw new Error('No Anthropic API Key');
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
+async function callGroq(systemPrompt, userPrompt) {
+  if (!process.env.GROQ_API_KEY) throw new Error('No Groq API Key');
+  const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-api-key': process.env.ANTHROPIC_API_KEY,
-      'anthropic-version': '2023-06-01'
+      'Authorization': `Bearer ${process.env.GROQ_API_KEY}`
     },
     body: JSON.stringify({
-      model: 'claude-3-5-sonnet-20241022',
+      model: 'llama3-70b-8192',
       max_tokens: 500,
-      system: systemPrompt,
-      messages: [{ role: 'user', content: userPrompt }]
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: userPrompt }
+      ],
+      temperature: 0.2
     })
   });
-  if (!response.ok) throw new Error(`Anthropic error: ${response.status}`);
+  if (!response.ok) throw new Error(`Groq error: ${response.status}`);
   const data = await response.json();
-  return data.content[0].text;
+  return data.choices[0].message.content;
 }
 
 async function callNvidiaNim(systemPrompt, userPrompt) {
@@ -50,11 +52,11 @@ async function orchestrateLLM(systemPrompt, userPrompt) {
     console.log('Attempting inference via NVIDIA NIM (llama3-70b-instruct)...');
     return await callNvidiaNim(systemPrompt, userPrompt);
   } catch (err) {
-    console.warn('NVIDIA NIM failed, falling back to Anthropic Claude...', err.message);
+    console.warn('NVIDIA NIM failed, falling back to Groq...', err.message);
     try {
-      return await callAnthropic(systemPrompt, userPrompt);
+      return await callGroq(systemPrompt, userPrompt);
     } catch (err2) {
-      console.error('Both NVIDIA NIM and Anthropic failed:', err2.message);
+      console.error('Both NVIDIA NIM and Groq failed:', err2.message);
       throw new Error('All AI models failed');
     }
   }
