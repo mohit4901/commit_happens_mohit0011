@@ -23,8 +23,16 @@ const InputPage = () => {
 
   useEffect(() => {
     if (location.state?.demoData) {
-      setStackNameLocal(sampleStackData.stackName);
-      setPackages(sampleStackData.packages);
+      setStackNameLocal(sampleStackData.name || 'Demo App');
+      const deps = sampleStackData.dependencies || {};
+      const devDeps = sampleStackData.devDependencies || {};
+      const allDeps = { ...deps, ...devDeps };
+      const pkgs = Object.keys(allDeps).map(name => ({
+        name,
+        version: allDeps[name].replace(/[\^~><=]/g, '').split(' ')[0],
+        type: 'npm'
+      }));
+      setPackages(pkgs);
     }
   }, [location]);
 

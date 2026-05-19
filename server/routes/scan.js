@@ -15,9 +15,12 @@ router.post('/', upload.single('file'), async (req, res) => {
       stackName = fileData.stackName || fileData.name || stackName;
       packages = fileData.packages || fileData.dependencies || [];
       if (!Array.isArray(packages) && typeof packages === 'object') {
-        packages = Object.keys(packages).map(name => ({
+        const deps = fileData.dependencies || {};
+        const devDeps = fileData.devDependencies || {};
+        const allDeps = { ...deps, ...devDeps };
+        packages = Object.keys(allDeps).map(name => ({
           name,
-          version: packages[name].replace('^', '').replace('~', ''),
+          version: allDeps[name].replace(/[\^~><=]/g, '').split(' ')[0], // clear semver
           type: 'npm'
         }));
       }
