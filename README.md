@@ -40,32 +40,43 @@ VulnMap:
 
 ## 🏗️ Architecture
 
-```
-React Frontend — Vercel
-┌─────────────────────────────────────────────────────────┐
-│  Input page          Graph view           Detail panel  │
-│  JSON / manual  ──►  D3.js force graph ──► CVE + AI +   │
-│  entry               (force-directed)     Export        │
-└──────────────────────────┬──────────────────────────────┘
-                           │ POST /api/scan
-                           ▼
-Express.js Backend — Railway
-┌─────────────────────────────────────────────────────────┐
-│  POST /api/scan      POST /api/ai/attack  POST /api/    │
-│  Parse JSON/SBOM ──► AI API call       ──► report       │
-│  Build graph data    Attack path           pdfkit risk  │
-│                      narrative             report       │
-└──────┬───────────────────────┬────────────────┬─────────┘
-       │                       │                │
-       ▼                       ▼                ▼
- MongoDB Atlas          NVD + OSV APIs      AI API (Multi-model)
- scans + vulns          CVE data (free)     NVIDIA NIM → Groq
- + reports              Cached in MongoDB   Attack path + risk
-                                │
-                                ▼
-              D3.js Interactive Graph (Frontend)
-         Red = critical · Yellow = medium · Green = safe
-                      Click node = detail panel
+```mermaid
+graph TD
+    %% Define Styles
+    classDef frontend fill:#1E293B,stroke:#00FF41,stroke-width:2px,color:#fff
+    classDef backend fill:#450a0a,stroke:#dc2626,stroke-width:2px,color:#fff
+    classDef database fill:#0f172a,stroke:#3b82f6,stroke-width:2px,color:#fff
+    classDef external fill:#1f2937,stroke:#eab308,stroke-width:2px,color:#fff
+    classDef ai fill:#064e3b,stroke:#10b981,stroke-width:2px,color:#fff
+    classDef finalgraph fill:#050505,stroke:#00FF41,stroke-width:4px,color:#fff
+
+    %% Frontend Layer
+    subgraph Client ["React Frontend (Vercel)"]
+        direction LR
+        A[Input Page <br> JSON / Manual]:::frontend --> B[Graph View <br> D3.js Force Graph]:::frontend
+        B --> C[Detail Panel <br> CVE + AI + Export]:::frontend
+    end
+
+    %% Backend Layer
+    subgraph Server ["Express.js Backend (Railway)"]
+        direction LR
+        D[POST /api/scan <br> Parse SBOM & Build Data]:::backend --> E[POST /api/ai/attack <br> AI Attack Narrative]:::backend
+        E --> F[POST /api/report <br> PDFkit Export]:::backend
+    end
+
+    %% Flow
+    B -- POST /api/scan --> D
+
+    %% Infrastructure & APIs
+    D --> DB[(MongoDB Atlas <br> Scans + Vulns)]:::database
+    D --> APIs{{NVD + OSV APIs <br> Free CVE Data}}:::external
+    E --> LLM{{AI Orchestration <br> NVIDIA NIM → Groq}}:::ai
+
+    %% Visual Output
+    DB -.-> G
+    APIs -.-> G
+    LLM -.-> G
+    G(((D3.js Interactive Graph <br><br> Red: Critical<br> Yellow: Medium<br> Green: Safe<br> Click: Detail Panel))):::finalgraph
 ```
 
 ---
@@ -135,6 +146,61 @@ This ensures **100% uptime for AI features** without paying Anthropic or OpenAI.
 | **Trust Depth scoring** | Risk score = CVE severity × position in dependency chain. Deeper = more dangerous. Original algorithm. |
 | **SBOM / package.json parsing** | Accepts npm `package.json`, CycloneDX SBOM, or manual entry. Real enterprise formats. |
 | **Sub-10s full scan** | Parallel CVE fetching + MongoDB cache = median 4-6s for 15 packages |
+
+---
+
+---
+
+## 🧠 Hackathon Pitch & Idea Breakdown
+
+> *"Apni company ka sabse kamzor link — 30 second mein dhundh lo"*
+
+**Core Problem:** Companies breach hoti hain apne vendor ke through — ek compromised open-source package se. Security teams ke paas koi unified view nahi hota ki dependencies kahan connect ho rahi hain aur weakest link kaunsa hai.
+
+**Unique Angle (Secret Weapon):** Real CVE fetching + AI "Attack Path Simulator" jo judge ko saamne live dikhayega: *"Agar yeh npm package compromise ho jaye to attacker tumhare AWS S3 bucket tak 3 hops mein pahunch sakta hai"*. Yeh abhi tak kisi ne nahi banaya.
+
+**Wow Moment (Demo):** JSON/SBOM file upload karo → 5 second mein interactive dependency graph appear hoga — red nodes (CVE wale), yellow (medium risk), green (safe). Ek red node pe click karo → right panel mein CVE details, exploit history, AI generated attack story. Ek recommendation. *Judge bolega: No-playing.*
+
+**Psychological Hook:** Boardroom logic 🤝 D3.js. Har judge chahta hai yeh attack live hote huye dekhna. Tu live chize dekhayega ki unki khud ki company ka tech stack kitna unsafe hai — aur humara brand "Dfx" unhe bacha lega.
+
+**What Others Won't Build:** Sirf ek static table banayenge CVE list ke sath. Tu banayega:
+1. Interactive D3.js force graph
+2. Trust chain depth visualization (kitne layers deep hai vulnerability)
+3. AI attack path narrative
+4. Exportable risk report PDF. Yeh combination koi nahi banayega.
+
+**AI Usage (Real):**
+1. **Attack path generation:** Given a vulnerable node, AI explains how realistic breach spread.
+2. **Executive summary:** Non-technical CTO ke liye 2-3 line plain English report.
+
+**Scalability:**
+- **Phase 1:** Manual JSON/SBOM upload.
+- **Phase 2:** GitHub repo direct connect (auto-scan packages on PR/commits).
+- **Phase 3:** CI/CD pipeline integration.
+- **Phase 4:** Real-time monitoring with Slack alerts.
+
+---
+
+## 🛠️ MERN Tech Split
+
+* **MongoDB Atlas:** Collections: `scans` (input, graph), `vulnerabilities` (CVE cache for NVD/OSV), `reports` (generated PDF paths/scan info).
+* **Express.js:** Routes: `POST /api/scan` (Parse JSON/fetch CVEs, build graph), `GET /api/scan/:id`, `POST /api/ai/attack-path` (AI call), `POST /api/report`.
+* **React 18:** Pages: Landing → Input (manual entry + JSON upload) → Graph View (main demo page, D3.js force graph) → Node Detail Panel (slide in) → Export Report. React Query for state.
+* **Node.js:** `axios` (NVD API), `pdfkit` (report), `multer` (JSON upload), `node-cache` (CVE responses cache to avoid NVD rate limit), `helmet`.
+* **D3.js (Frontend):** Force-directed graph. Node color = risk level (red/yellow/green). Node size = trust chain depth (deeper = bigger). Edge thickness = dependency strength. Click on node → detail panel open. Drag nodes, zoom, pan → full interactive.
+* **CVE APIs (Free):** NVD API and OSV.dev (free, no key needed for basic). OSV.dev API is very fast, covers npm/PyPI/etc. Fetch CVEs by package name + version. Cache responses in MongoDB to avoid rate limits.
+* **AI API:** Input context (package name + CVE list + dependencies). Output plain English chain path (*"If lodash 4.17.4 is exploited, attacker can access your Express session middleware, then reach your MongoDB credentials via env leakage"*). JSON narrative.
+* **Deploy:** Backend → Railway. Frontend → Vercel. DB → MongoDB Atlas free tier. NVD + OSV → free public APIs. Total cost: $0.
+
+---
+
+## ⏱️ 5 Hour Build Order (Execution Plan)
+
+* **Hour 1:** Folder structure + Git init + Backend Express setup + JSON parser. NVD API fetcher for README dependencies. Parse package.json, call external API, store in MongoDB.
+* **Hour 2:** D3.js force graph — yeh sabse important part hai, isme time lagna hai. Node color coding implement karo.
+* **Hour 3:** React Landing + Input page (manual entry form + JSON drag and drop upload). Graph View page with D3.js force graph.
+* **Hour 4:** Node detail slide-in panel (click node → CVE list + AI attack path + Fix recommendation). Export PDF button. UI polish — dark cybersecurity theme. Responsive layout.
+* **Hour 5:** Railway + Vercel deploy. Demo JSON file banao (pre-seeded with real vulnerable packages — lodash old version, axios old version). README exact like this. Final GitHub push.
 
 ---
 
