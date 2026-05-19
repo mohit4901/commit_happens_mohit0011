@@ -1,4 +1,4 @@
-const fetch = require('node-fetch'); // we can just use native fetch in node 18+
+// using native fetch
 
 async function callGroq(systemPrompt, userPrompt) {
   if (!process.env.GROQ_API_KEY) throw new Error('No Groq API Key');
