@@ -4,6 +4,71 @@ import { Shield, Sun, Moon } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import ScrollRevealText from '../components/ScrollRevealText';
 
+// Premium SVG Brand Logos
+const OneDriveLogo = () => (
+  <div className="flex items-center gap-2 hover:text-brand-green transition duration-300">
+    <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
+      <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z" />
+    </svg>
+    <span className="font-mono text-xs tracking-wider font-bold">ONEDRIVE</span>
+  </div>
+);
+
+const DropboxLogo = () => (
+  <div className="flex items-center gap-2 hover:text-brand-green transition duration-300">
+    <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
+      <path d="M6 2l6 4-6 4-6-4 6-4zm12 0l6 4-6 4-6-4 6-4zM6 14l6-4 6 4-6 4-6-4zm12-4l6 4-6 4-6-4 6-4zm-6 9.5l-6-4-1.5 1L12 22l7.5-5.5-1.5-1-6 4z" />
+    </svg>
+    <span className="font-mono text-xs tracking-wider font-bold">DROPBOX</span>
+  </div>
+);
+
+const MegaLogo = () => (
+  <div className="flex items-center gap-2 hover:text-brand-green transition duration-300">
+    <svg className="h-4 w-4 fill-none stroke-current" strokeWidth="2.5" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="10" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M8 15V9l4 3 4-3v6" />
+    </svg>
+    <span className="font-mono text-xs tracking-wider font-bold">MEGA</span>
+  </div>
+);
+
+const BoxLogo = () => (
+  <div className="flex items-center gap-2 hover:text-brand-green transition duration-300">
+    <svg className="h-4 w-4 fill-none stroke-current" strokeWidth="2.5" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+    </svg>
+    <span className="font-mono text-xs tracking-wider font-bold">BOX</span>
+  </div>
+);
+
+const PaypalLogo = () => (
+  <div className="flex items-center gap-2 hover:text-brand-green transition duration-300">
+    <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
+      <path d="M20.03 7.56c-.34-1.72-1.25-2.88-2.73-3.48C16.1 3.5 14.54 3.5 12.8 3.5H7.5c-.55 0-1 .45-1 1l-2.6 14.5c-.09.52.3 1 1 1h4.2l.9-5.1c.1-.55.58-.9 1.1-.9h2.3c2.9 0 5.1-1.2 5.8-4.6.4-1.8.2-3.1-.7-3.84z" />
+    </svg>
+    <span className="font-mono text-xs tracking-wider font-bold">PAYPAL</span>
+  </div>
+);
+
+const WalmartLogo = () => (
+  <div className="flex items-center gap-2 hover:text-brand-green transition duration-300">
+    <svg className="h-4 w-4 fill-none stroke-current animate-[spin_25s_linear_infinite]" strokeWidth="2.5" viewBox="0 0 24 24">
+      <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" strokeLinecap="round" />
+    </svg>
+    <span className="font-mono text-xs tracking-wider font-bold">WALMART</span>
+  </div>
+);
+
+const TencentLogo = () => (
+  <div className="flex items-center gap-2 hover:text-brand-green transition duration-300">
+    <svg className="h-4 w-4 fill-none stroke-current" strokeWidth="2.5" viewBox="0 0 24 24">
+      <polygon points="12,2 22,8.5 22,15.5 12,22 2,15.5 2,8.5" />
+    </svg>
+    <span className="font-mono text-xs tracking-wider font-bold">TENCENT</span>
+  </div>
+);
+
 const Landing = () => {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
@@ -107,24 +172,24 @@ const Landing = () => {
 
         {/* Trusted Partners / Client Logos Bar */}
         <div className="border-y border-vulnmap-border bg-vulnmap-card py-6 mb-16 overflow-hidden relative w-full select-none">
-          <div className="animate-marquee gap-24 items-center opacity-65 text-brand-text font-mono text-xs">
+          <div className="animate-marquee gap-24 items-center opacity-65 text-brand-text">
             {/* First Set */}
-            <span className="font-bold tracking-tight mx-4 hover:text-brand-green transition cursor-default uppercase">OneDrive</span>
-            <span className="font-bold tracking-tight mx-4 hover:text-brand-green transition cursor-default uppercase">Dropbox</span>
-            <span className="font-bold tracking-tight mx-4 hover:text-brand-green transition cursor-default uppercase">MEGA</span>
-            <span className="font-bold tracking-tight mx-4 hover:text-brand-green transition cursor-default uppercase">box</span>
-            <span className="font-bold tracking-tight mx-4 hover:text-brand-green transition cursor-default uppercase">PayPal</span>
-            <span className="font-bold tracking-tight mx-4 hover:text-brand-green transition cursor-default uppercase">Walmart</span>
-            <span className="font-bold tracking-tight mx-4 hover:text-brand-green transition cursor-default uppercase">Tencent</span>
+            <OneDriveLogo />
+            <DropboxLogo />
+            <MegaLogo />
+            <BoxLogo />
+            <PaypalLogo />
+            <WalmartLogo />
+            <TencentLogo />
             
             {/* Second Set (Duplicate for seamless scroll) */}
-            <span className="font-bold tracking-tight mx-4 hover:text-brand-green transition cursor-default uppercase">OneDrive</span>
-            <span className="font-bold tracking-tight mx-4 hover:text-brand-green transition cursor-default uppercase">Dropbox</span>
-            <span className="font-bold tracking-tight mx-4 hover:text-brand-green transition cursor-default uppercase">MEGA</span>
-            <span className="font-bold tracking-tight mx-4 hover:text-brand-green transition cursor-default uppercase">box</span>
-            <span className="font-bold tracking-tight mx-4 hover:text-brand-green transition cursor-default uppercase">PayPal</span>
-            <span className="font-bold tracking-tight mx-4 hover:text-brand-green transition cursor-default uppercase">Walmart</span>
-            <span className="font-bold tracking-tight mx-4 hover:text-brand-green transition cursor-default uppercase">Tencent</span>
+            <OneDriveLogo />
+            <DropboxLogo />
+            <MegaLogo />
+            <BoxLogo />
+            <PaypalLogo />
+            <WalmartLogo />
+            <TencentLogo />
           </div>
         </div>
 
