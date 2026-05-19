@@ -15,7 +15,8 @@ const ForceGraph = ({ nodes, edges, onNodeClick, selectedNodeId }) => {
       .append('svg')
       .attr('width', width)
       .attr('height', height)
-      .style('background-color', '#050505');
+      .style('background-color', 'var(--bg-primary)')
+      .style('transition', 'background-color 0.25s ease');
 
     // Add glowing filter for critical/high nodes
     const defs = svg.append('defs');
@@ -47,7 +48,7 @@ const ForceGraph = ({ nodes, edges, onNodeClick, selectedNodeId }) => {
       .attr('orient', 'auto')
       .append('path')
       .attr('d', 'M0,-5L10,0L0,5')
-      .attr('fill', '#374151');
+      .attr('fill', 'var(--border-main)');
 
     const g = svg.append('g');
 
@@ -77,9 +78,10 @@ const ForceGraph = ({ nodes, edges, onNodeClick, selectedNodeId }) => {
       .selectAll('line')
       .data(edges)
       .join('line')
-      .attr('stroke', '#1f2937')
+      .attr('stroke', 'var(--border-main)')
       .attr('stroke-width', 2)
-      .attr('marker-end', 'url(#arrow)');
+      .attr('marker-end', 'url(#arrow)')
+      .style('transition', 'stroke 0.25s ease');
 
     // Node Groups
     const nodeGroup = g.append('g')
@@ -114,11 +116,11 @@ const ForceGraph = ({ nodes, edges, onNodeClick, selectedNodeId }) => {
     // Solid Node Circle
     nodeGroup.append('circle')
       .attr('r', d => Math.max(20, Math.min(45, d.riskScore / 2 + 15)))
-      .attr('fill', d => d.id === selectedNodeId ? '#050505' : '#0a0a0a')
+      .attr('fill', d => d.id === selectedNodeId ? 'var(--bg-primary)' : 'var(--bg-card)')
       .attr('stroke', d => colorMap[d.riskLevel] || colorMap.SAFE)
       .attr('stroke-width', d => d.id === selectedNodeId ? 4 : 2)
       .style('cursor', 'pointer')
-      .style('transition', 'all 0.2s ease');
+      .style('transition', 'fill 0.25s ease, stroke-width 0.2s ease');
 
     // Risk Score Text
     nodeGroup.append('text')
@@ -136,11 +138,12 @@ const ForceGraph = ({ nodes, edges, onNodeClick, selectedNodeId }) => {
       .text(d => d.id)
       .attr('text-anchor', 'middle')
       .attr('dy', d => Math.max(20, Math.min(45, d.riskScore / 2 + 15)) + 18)
-      .attr('fill', '#ffffff')
+      .attr('fill', 'var(--text-main)')
       .attr('font-family', 'Space Mono, monospace')
       .attr('font-size', '11px')
       .attr('letter-spacing', '0.05em')
-      .style('pointer-events', 'none');
+      .style('pointer-events', 'none')
+      .style('transition', 'fill 0.25s ease');
 
     // Highlight connections on hover
     nodeGroup.on('mouseover', (e, d) => {
@@ -156,15 +159,15 @@ const ForceGraph = ({ nodes, edges, onNodeClick, selectedNodeId }) => {
       // Dim all nodes except connected
       nodeGroup.style('opacity', n => connectedNodeIds.has(n.id) ? 1.0 : 0.15);
       
-      // Dim all edges except connected
+      // Dim all edges except connected, highlight targets with brand-primary color
       link
-        .attr('stroke', edge => (edge.source.id === d.id || edge.target.id === d.id) ? '#00FF41' : '#1f2937')
+        .attr('stroke', edge => (edge.source.id === d.id || edge.target.id === d.id) ? 'var(--brand-primary)' : 'var(--border-main)')
         .attr('stroke-width', edge => (edge.source.id === d.id || edge.target.id === d.id) ? 3 : 2);
     });
 
     nodeGroup.on('mouseout', () => {
       nodeGroup.style('opacity', 1.0);
-      link.attr('stroke', '#1f2937').attr('stroke-width', 2);
+      link.attr('stroke', 'var(--border-main)').attr('stroke-width', 2);
     });
 
     simulation.on('tick', () => {

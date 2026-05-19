@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useScan } from '../context/ScanContext';
-import { UploadCloud, Plus, X, Loader2, Code, ShieldAlert } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
+import { UploadCloud, Plus, X, Loader2, Code, ShieldAlert, Sun, Moon } from 'lucide-react';
 import sampleStackData from '../../../demo/sample-stack.json';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
@@ -9,6 +10,7 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
 const InputPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { theme, toggleTheme } = useTheme();
   const { setScanId, setGraphData, setOverallRiskScore, setAiSummary, setStackName } = useScan();
   
   const [stackNameLocal, setStackNameLocal] = useState('');
@@ -128,49 +130,58 @@ const InputPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-vulnmap-dark font-mono text-center px-4">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-vulnmap-dark font-mono text-center px-4 text-brand-text">
         <Loader2 className="w-16 h-16 text-brand-green animate-spin mb-6" />
         <h2 className="text-2xl font-bold mb-2">SCANNING YOUR STACK</h2>
-        <p className="text-gray-400 max-w-md mx-auto">Querying National Vulnerability Database (NVD) & OSV... Mapping dependencies... Calling NVIDIA NIM for attack path simulation...</p>
+        <p className="text-gray-500 dark:text-gray-400 max-w-md mx-auto">Querying National Vulnerability Database (NVD) & OSV... Mapping dependencies... Calling NVIDIA NIM for attack path simulation...</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-vulnmap-dark text-white font-sans flex flex-col items-center">
+    <div className="min-h-screen bg-vulnmap-dark text-brand-text font-sans flex flex-col items-center">
       <div className="w-full max-w-7xl p-4 lg:p-8">
         
         {/* Minimal Navbar */}
-        <nav className="flex justify-between items-center py-5 px-6 border border-vulnmap-border mb-12">
-          <Link to="/" className="text-3xl font-mono tracking-widest font-bold hover:text-brand-green transition">DFX</Link>
-          <div className="text-sm font-mono text-brand-green border border-brand-green px-4 py-1 rounded-full">Secure Scan Mode</div>
+        <nav className="flex justify-between items-center py-5 px-6 border border-vulnmap-border mb-12 bg-vulnmap-card">
+          <Link to="/" className="text-3xl font-mono tracking-widest font-bold text-brand-green transition">DFX</Link>
+          <div className="flex items-center gap-4">
+            <button 
+              onClick={toggleTheme}
+              className="p-2 border border-vulnmap-border bg-vulnmap-card text-brand-green hover:bg-brand-green hover:text-white dark:hover:text-black transition"
+              title="Toggle Theme"
+            >
+              {theme === 'dark' ? <Sun className="w-4.5 h-4.5" /> : <Moon className="w-4.5 h-4.5" />}
+            </button>
+            <div className="text-xs font-mono text-brand-green border border-brand-green px-4 py-1.5 rounded-full hidden sm:block">Secure Scan Mode</div>
+          </div>
         </nav>
 
         <div className="mb-12 text-center">
           <h1 className="text-4xl lg:text-5xl font-mono font-bold mb-4 uppercase">Upload Your Stack</h1>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Drag and drop your project's <code className="bg-vulnmap-card border border-vulnmap-border px-2 py-0.5 rounded">package.json</code> file to instantly visualize vulnerabilities and attack paths in your dependencies.
+          <p className="text-gray-500 dark:text-gray-400 text-lg max-w-2xl mx-auto">
+            Drag and drop your project's <code className="bg-vulnmap-card border border-vulnmap-border px-2 py-0.5 rounded text-brand-green">package.json</code> file to instantly visualize vulnerabilities and attack paths in your dependencies.
           </p>
         </div>
 
         {error && (
           <div className="bg-risk-critical/10 text-risk-critical p-4 rounded-xl mb-8 border border-risk-critical/50 flex items-center gap-3 max-w-4xl mx-auto">
             <ShieldAlert className="w-6 h-6" />
-            <span className="font-mono">{error}</span>
+            <span className="font-mono text-sm">{error}</span>
           </div>
         )}
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
           {/* File Upload Area */}
-          <div className="bg-[#0a0a0a] p-8 lg:p-12 border border-vulnmap-border flex flex-col items-center justify-center relative hover:border-brand-green transition-colors group cursor-pointer"
+          <div className="bg-vulnmap-card p-8 lg:p-12 border border-vulnmap-border flex flex-col items-center justify-center relative hover:border-brand-green transition-colors group cursor-pointer"
                onDragOver={(e) => e.preventDefault()}
                onDrop={handleFileDrop}
                onClick={() => document.getElementById('fileUpload').click()}>
             <div className="absolute inset-0 bg-brand-green/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
             
-            <UploadCloud className="w-16 h-16 text-gray-500 group-hover:text-brand-green transition-colors mb-6 z-10" />
-            <h3 className="text-2xl font-bold mb-2 z-10">Drag & Drop</h3>
-            <p className="text-gray-400 text-center mb-6 z-10">
+            <UploadCloud className="w-16 h-16 text-gray-400 group-hover:text-brand-green transition-colors mb-6 z-10" />
+            <h3 className="text-2xl font-bold mb-2 z-10 text-brand-text">Drag & Drop</h3>
+            <p className="text-gray-500 dark:text-gray-400 text-center mb-6 z-10">
               your package.json or click to browse
             </p>
             
@@ -210,20 +221,20 @@ const InputPage = () => {
                 ✅ Loaded: {file.name}
               </div>
             ) : (
-              <div className="border border-vulnmap-border px-6 py-2 font-mono text-sm text-gray-500 z-10 bg-[#050505]">
+              <div className="border border-vulnmap-border px-6 py-2 font-mono text-sm text-gray-500 dark:text-gray-400 z-10 bg-vulnmap-dark">
                 No file selected
               </div>
             )}
           </div>
 
           {/* Example Code Snippet Area */}
-          <div className="bg-[#0a0a0a] p-8 border border-vulnmap-border flex flex-col">
-            <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+          <div className="bg-vulnmap-card p-8 border border-vulnmap-border flex flex-col">
+            <h3 className="text-xl font-bold mb-4 flex items-center gap-2 text-brand-text">
               <Code className="w-5 h-5 text-brand-green" /> What we look for
             </h3>
-            <p className="text-gray-400 text-sm mb-6">We parse your dependencies and check exact versions against real CVE databases.</p>
+            <p className="text-gray-500 dark:text-gray-400 text-sm mb-6">We parse your dependencies and check exact versions against real CVE databases.</p>
             
-            <div className="bg-[#050505] border border-vulnmap-border p-4 font-mono text-sm text-gray-300 overflow-x-auto flex-1 rounded">
+            <div className="bg-vulnmap-dark border border-vulnmap-border p-4 font-mono text-sm text-gray-600 dark:text-gray-300 overflow-x-auto flex-1 rounded">
               <pre>
 {`{
   "name": "my-enterprise-app",
@@ -241,12 +252,12 @@ const InputPage = () => {
 
         {/* Manual Entry Section (Optional) */}
         {packages.length > 0 && (
-          <div className="bg-[#0a0a0a] p-6 border border-vulnmap-border mb-12">
+          <div className="bg-vulnmap-card p-6 border border-vulnmap-border mb-12">
             <h3 className="text-xl font-bold mb-4 font-mono text-brand-green">Parsed Packages ({packages.length}/15 max)</h3>
             <div className="flex flex-wrap gap-3">
               {packages.map((pkg, i) => (
-                <div key={i} className="flex items-center gap-2 bg-[#050505] border border-vulnmap-border px-4 py-2 text-sm font-mono">
-                  <span>{pkg.name} <span className="text-gray-500">v{pkg.version}</span></span>
+                <div key={i} className="flex items-center gap-2 bg-vulnmap-dark border border-vulnmap-border px-4 py-2 text-sm font-mono text-brand-text">
+                  <span>{pkg.name} <span className="text-gray-500 dark:text-gray-400">v{pkg.version}</span></span>
                   <X className="w-4 h-4 cursor-pointer hover:text-risk-critical transition-colors" onClick={() => handleRemovePackage(i)} />
                 </div>
               ))}
@@ -256,7 +267,7 @@ const InputPage = () => {
 
         <button 
           onClick={handleSubmit}
-          className="w-full py-5 bg-brand-green hover:bg-green-400 text-black font-mono font-bold text-xl transition-colors tracking-widest shadow-[0_0_20px_rgba(0,255,65,0.3)]"
+          className="w-full py-5 bg-brand-green hover:bg-brand-green-hover text-white dark:text-black font-mono font-bold text-xl transition-colors tracking-widest cursor-pointer border-0 rounded-none shadow-[0_4px_15px_rgba(99,102,241,0.2)]"
         >
           ANALYZE VULNERABILITIES NOW →
         </button>

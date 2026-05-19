@@ -1,10 +1,14 @@
 @import "tailwindcss";
 
 @theme {
-  --color-vulnmap-dark: #050505;
-  --color-vulnmap-card: #0a0a0a;
-  --color-vulnmap-border: #1F2937;
-  --color-brand-green: #00FF41;
+  --color-vulnmap-dark: var(--bg-primary);
+  --color-vulnmap-card: var(--bg-card);
+  --color-vulnmap-border: var(--border-main);
+  --color-brand-green: var(--brand-primary);
+  --color-brand-green-hover: var(--brand-hover);
+  --color-brand-text: var(--text-main);
+  --color-brand-muted: var(--text-muted);
+
   --color-risk-critical: #DC2626;
   --color-risk-high: #F97316;
   --color-risk-medium: #EAB308;
@@ -14,8 +18,43 @@
   --font-family-mono: "Space Mono", monospace;
 }
 
-body {
-  background-color: var(--color-vulnmap-dark);
-  color: white;
-  font-family: var(--font-family-sans);
+:root {
+  --bg-primary: #FCFDFE;
+  --bg-card: #FFFFFF;
+  --border-main: #E5E8EB;
+  --brand-primary: #4F46E5;
+  --brand-hover: #4338CA;
+  --text-main: #0F172A;
+  --text-muted: #64748B;
 }
+
+.dark {
+  --bg-primary: #080C14;
+  --bg-card: #101622;
+  --border-main: #1E293B;
+  --brand-primary: #6366F1;
+  --brand-hover: #4F46E5;
+  --text-main: #F8FAFC;
+  --text-muted: #94A3B8;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  font-family: var(--font-family-sans);
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+/* Custom scrollbars */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--border-main);
+  border-radius: 3px;
+}
+

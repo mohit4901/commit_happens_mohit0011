@@ -29,56 +29,56 @@ const Contact = () => {
           </div>
         </div>
 
-        <div className="bg-[#0a0a0a] border border-vulnmap-border p-8">
+        <div className="bg-vulnmap-card border border-vulnmap-border p-8">
           {submitted ? (
             <div className="h-full flex flex-col items-center justify-center text-center py-12">
               <div className="text-brand-green font-mono text-xl mb-4">MESSAGE TRANSMITTED</div>
-              <p className="text-gray-400">We have received your security audit request. Our engineering team will review it shortly.</p>
+              <p className="text-gray-500 dark:text-gray-400">We have received your security audit request. Our engineering team will review it shortly.</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label className="block text-sm text-gray-400 mb-2 font-mono">Full Name</label>
+                <label className="block text-sm text-gray-500 dark:text-gray-400 mb-2 font-mono">Full Name</label>
                 <input 
                   type="text" 
                   required
-                  className="w-full bg-vulnmap-dark border border-vulnmap-border rounded p-3 text-white outline-none focus:border-brand-green font-mono"
+                  className="w-full bg-vulnmap-dark border border-vulnmap-border rounded p-3 text-brand-text outline-none focus:border-brand-green font-mono"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-400 mb-2 font-mono">Email Address</label>
+                <label className="block text-sm text-gray-500 dark:text-gray-400 mb-2 font-mono">Email Address</label>
                 <input 
                   type="email" 
                   required
-                  className="w-full bg-vulnmap-dark border border-vulnmap-border rounded p-3 text-white outline-none focus:border-brand-green font-mono"
+                  className="w-full bg-vulnmap-dark border border-vulnmap-border rounded p-3 text-brand-text outline-none focus:border-brand-green font-mono"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-400 mb-2 font-mono">Company / Organization</label>
+                <label className="block text-sm text-gray-500 dark:text-gray-400 mb-2 font-mono">Company / Organization</label>
                 <input 
                   type="text" 
                   required
-                  className="w-full bg-vulnmap-dark border border-vulnmap-border rounded p-3 text-white outline-none focus:border-brand-green font-mono"
+                  className="w-full bg-vulnmap-dark border border-vulnmap-border rounded p-3 text-brand-text outline-none focus:border-brand-green font-mono"
                   value={formData.company}
                   onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-400 mb-2 font-mono">Message / Scope Description</label>
+                <label className="block text-sm text-gray-500 dark:text-gray-400 mb-2 font-mono">Message / Scope Description</label>
                 <textarea 
                   rows="4"
-                  className="w-full bg-vulnmap-dark border border-vulnmap-border rounded p-3 text-white outline-none focus:border-brand-green font-mono"
+                  className="w-full bg-vulnmap-dark border border-vulnmap-border rounded p-3 text-brand-text outline-none focus:border-brand-green font-mono"
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 />
               </div>
               <button 
                 type="submit" 
-                className="w-full py-4 bg-brand-green text-black font-mono font-bold hover:bg-green-400 transition"
+                className="w-full py-4 bg-brand-green text-white dark:text-black font-mono font-bold hover:bg-brand-green-hover transition cursor-pointer"
               >
                 SUBMIT REQUEST
               </button>

@@ -14,25 +14,25 @@ const Industries = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-[#0a0a0a] border border-vulnmap-border p-10 hover:border-brand-green transition group">
+        <div className="bg-vulnmap-card border border-vulnmap-border p-10 hover:border-brand-green transition group">
           <Landmark className="w-12 h-12 text-brand-green mb-6" />
           <h3 className="text-2xl font-bold font-mono mb-4">Fintech & Banking</h3>
-          <p className="text-gray-400">Strict compliance with PCI-DSS and SOC2. We map out financial transaction pipelines, checking for critical security holes in crypto libraries, payment gateways, and banking APIs.</p>
+          <p className="text-gray-550 dark:text-gray-400">Strict compliance with PCI-DSS and SOC2. We map out financial transaction pipelines, checking for critical security holes in crypto libraries, payment gateways, and banking APIs.</p>
         </div>
-        <div className="bg-[#0a0a0a] border border-vulnmap-border p-10 hover:border-brand-green transition group">
+        <div className="bg-vulnmap-card border border-vulnmap-border p-10 hover:border-brand-green transition group">
           <ShieldAlert className="w-12 h-12 text-brand-green mb-6" />
           <h3 className="text-2xl font-bold font-mono mb-4">Defense & GovTech</h3>
-          <p className="text-gray-400">Securing federal supply chains. We audit critical dependency trees for public sector systems to prevent nation-state software supply chain attacks.</p>
+          <p className="text-gray-550 dark:text-gray-400">Securing federal supply chains. We audit critical dependency trees for public sector systems to prevent nation-state software supply chain attacks.</p>
         </div>
-        <div className="bg-[#0a0a0a] border border-vulnmap-border p-10 hover:border-brand-green transition group">
+        <div className="bg-vulnmap-card border border-vulnmap-border p-10 hover:border-brand-green transition group">
           <Cpu className="w-12 h-12 text-brand-green mb-6" />
           <h3 className="text-2xl font-bold font-mono mb-4">SaaS Platforms</h3>
-          <p className="text-gray-400">Protecting cloud environments. We scan modern Javascript/Python stacks to ensure zero-day vulnerabilities in common libraries do not allow cross-tenant data leaks.</p>
+          <p className="text-gray-550 dark:text-gray-400">Protecting cloud environments. We scan modern Javascript/Python stacks to ensure zero-day vulnerabilities in common libraries do not allow cross-tenant data leaks.</p>
         </div>
-        <div className="bg-[#0a0a0a] border border-vulnmap-border p-10 hover:border-brand-green transition group">
+        <div className="bg-vulnmap-card border border-vulnmap-border p-10 hover:border-brand-green transition group">
           <Heart className="w-12 h-12 text-brand-green mb-6" />
           <h3 className="text-2xl font-bold font-mono mb-4">Healthcare</h3>
-          <p className="text-gray-400">HIPAA compliant dependency checks. We ensure medical record systems and patient monitoring APIs are clear of vulnerable modules to prevent ransomware attacks.</p>
+          <p className="text-gray-550 dark:text-gray-400">HIPAA compliant dependency checks. We ensure medical record systems and patient monitoring APIs are clear of vulnerable modules to prevent ransomware attacks.</p>
         </div>
       </div>
     </SharedPage>
