@@ -172,7 +172,7 @@ const Landing = () => {
 
         {/* Trusted Partners / Client Logos Bar */}
         <div className="border-y border-vulnmap-border bg-vulnmap-card py-6 mb-16 overflow-hidden relative w-full select-none">
-          <div className="animate-marquee gap-24 items-center opacity-65 text-brand-text">
+          <div className="animate-marquee gap-24 items-center text-white opacity-100">
             {/* First Set */}
             <OneDriveLogo />
             <DropboxLogo />
