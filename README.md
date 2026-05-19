@@ -30,11 +30,11 @@ Think of your company's tech stack as a chain. Each link is a package your team 
 **If one link is weak — the whole chain breaks.**
 
 VulnMap:
-1. **Takes your package list** — drag-and-drop your `package.json`, `requirements.txt`, or type manually
-2. **Fetches real CVE data** from NVD + OSV (free government vulnerability databases) in real-time
-3. **Builds an interactive graph** — red = critical vulnerability, yellow = medium, green = safe
-4. **Runs AI attack simulation** — powered by NVIDIA NIM (LLaMA 3 70B) with Groq fallback, it tells you *exactly* how an attacker would chain your vulnerabilities
-5. **Generates a PDF risk report** — board-ready, CISO-level security brief
+1. **Takes your package list** — drag-and-drop your `package.json`, CycloneDX SBOM, SPDX JSON, or type manually.
+2. **Fetches real CVE data** from NVD + OSV (free government vulnerability databases) in real-time.
+3. **Builds an interactive graph** — red = critical vulnerability, yellow = medium, green = safe.
+4. **Runs AI attack simulation** — powered by NVIDIA NIM (LLaMA 3 70B) with Groq fallback, it tells you *exactly* how an attacker would chain your vulnerabilities.
+5. **Generates a PDF risk report** — board-ready, CISO-level security brief.
 
 ---
 
@@ -81,7 +81,7 @@ graph TD
 
 ---
 
-## ⚡ Multi-Model AI Orchestration
+## ⚡ Multi-Model AI Orchestration & Fallback
 
 VulnMap implements a **production-grade AI fallback chain**:
 
@@ -95,16 +95,28 @@ NVIDIA NIM ──► meta/llama3-70b-instruct (Primary)
 Groq API ──► llama3-70b-8192 (Fallback — free, 500 tok/s)
    │ (if both fail)
    ▼
-Graceful error message (never crashes the scan)
+Context-Aware Offline Generator ──► Custom Mock Graph Exploit Simulator (Never crashes)
 ```
 
-This ensures **100% uptime for AI features** without paying Anthropic or OpenAI.
+This guarantees **100% scanning runtime reliability** under all API conditions.
+
+---
+
+## 🎨 Premium Visual Enhancements
+
+VulnMap features an ultra-premium **Cyberpunk Black & Orange** aesthetic, locking down all page components to a sleek, modern visual interface:
+
+1. **Brand Theme Locking**: Locked completely to `#05070B` (cyberpunk black) and `#FF6B00` (neon orange accents) across primary buttons, highlights, badges, and interfaces.
+2. **Infinite Marquee SVG Scroller**: A continuous, seamless horizontal marquee looping custom, high-fidelity SVGs representing top tech brands (`OneDrive`, `Dropbox`, `MEGA`, `Box`, `PayPal`, `Walmart`, `Tencent`). Logos render in 100% white, full-opacity with dynamic hover glowing effects and rotation animation.
+3. **Live Threat Simulator Terminal**: An active self-typing CLI terminal console (`TerminalDemo`) displaying simulated CycloneDX SBOM ingestion, threat containment alerts, transitive vulnerability scans, and AI attack paths in real-time.
+4. **Scroll-triggered Opacity Reveal**: The core value statement features a customized viewport scroll engine splitting sentences word-by-word, fading in word-by-word from `0.15` to `1.0` opacity.
+5. **High-Contrast Digital Fingerprint Canvas**: Features a highly visible digital security canvas rendering perfectly in both dark and modern configurations without visual overlaps.
 
 ---
 
 ## 🔥 The "Wow" Demo Flow — What Judges Will See
 
-1. Judge opens the app → **DFX-style dark neon landing page** (premium cybersecurity aesthetic)
+1. Judge opens the app → **Sleek Cyberpunk Threat Terminal & Infinite Marquee** loop immediately.
 2. Clicks **"GET A DEMO"** → pre-loaded `package.json` with `lodash@4.17.4`, `log4j@2.14.1`, `axios@0.21.0` etc.
 3. Clicks **"Analyze Vulnerabilities"**
 4. **~5 seconds later** → force-directed graph appears:
@@ -130,9 +142,7 @@ This ensures **100% uptime for AI features** without paying Anthropic or OpenAI.
    • Set log4j2.formatMsgNoLookups=true as interim fix
    • Audit all HTTP input points for JNDI injection vectors
    ```
-7. Judge clicks **"Export PDF Report"** → professional risk brief downloads instantly
-
-**Judge's thought:** *"This is a real enterprise security tool."*
+7. Judge clicks **"Export PDF Report"** → professional risk brief downloads instantly.
 
 ---
 
@@ -140,14 +150,12 @@ This ensures **100% uptime for AI features** without paying Anthropic or OpenAI.
 
 | Feature | How it's novel |
 |---------|---------------|
-| **Multi-model AI orchestration** | NVIDIA NIM → Groq fallback chain. Not a single-provider dependency. Zero cost AI at production scale. |
+| **Multi-model AI orchestration** | NVIDIA NIM → Groq fallback chain with custom offline generators. Zero-cost enterprise AI at scale. |
 | **Real CVE data, not mock data** | Hits live NVD + OSV APIs. MongoDB caching with 24h TTL. Actual CVSS scores. |
-| **D3 force simulation** | Charge-based repulsion, collision detection, drag physics — not a static chart |
-| **Trust Depth scoring** | Risk score = CVE severity × position in dependency chain. Deeper = more dangerous. Original algorithm. |
-| **SBOM / package.json parsing** | Accepts npm `package.json`, CycloneDX SBOM, or manual entry. Real enterprise formats. |
-| **Sub-10s full scan** | Parallel CVE fetching + MongoDB cache = median 4-6s for 15 packages |
-
----
+| **Multi-Format Ingestion Engine** | Supports drag-and-drop parsing for npm `package.json`, CycloneDX SBOMs (JSON), and SPDX SBOM JSON structures. |
+| **D3 force simulation** | Charge-based repulsion, collision detection, drag physics — not a static chart. |
+| **Trust Depth scoring** | Risk score = CVE severity × position in dependency chain. Deeper = more dangerous. |
+| **Sub-10s full scan** | Parallel CVE fetching + MongoDB cache = median 4-6s for 15 packages. |
 
 ---
 
@@ -194,39 +202,30 @@ This ensures **100% uptime for AI features** without paying Anthropic or OpenAI.
 
 ---
 
-## ⏱️ 5 Hour Build Order (Execution Plan)
-
-* **Hour 1:** Folder structure + Git init + Backend Express setup + JSON parser. NVD API fetcher for README dependencies. Parse package.json, call external API, store in MongoDB.
-* **Hour 2:** D3.js force graph — yeh sabse important part hai, isme time lagna hai. Node color coding implement karo.
-* **Hour 3:** React Landing + Input page (manual entry form + JSON drag and drop upload). Graph View page with D3.js force graph.
-* **Hour 4:** Node detail slide-in panel (click node → CVE list + AI attack path + Fix recommendation). Export PDF button. UI polish — dark cybersecurity theme. Responsive layout.
-* **Hour 5:** Railway + Vercel deploy. Demo JSON file banao (pre-seeded with real vulnerable packages — lodash old version, axios old version). README exact like this. Final GitHub push.
-
----
-
 ## 📊 Evaluation Criteria Alignment
 
-### 🔬 Engineering Rigor
-- **MERN stack** with full separation of concerns (routes → services → models)
-- **Mongoose schema** with TTL-indexed CVE cache (auto-expires stale data)
-- **Helmet.js** HTTP security headers + **express-rate-limit** (100 req/15min) on all API routes
-- **Error boundary** — every AI call has try/catch with graceful degradation
-- **Async parallel CVE fetching** via `Promise.all` across all packages
-- **Input validation** on file uploads — only `.json` accepted, max 5MB body limit
+### 🔬 Engineering Rigor & Render Resilience
+- **MERN stack** with full separation of concerns (routes → services → models).
+- **Mongoose schema** with TTL-indexed CVE cache (auto-expires stale data).
+- **Helmet.js** HTTP security headers + **express-rate-limit** (100 req/15min) on all API routes.
+- **Error boundary** — every AI call has try/catch with graceful degradation.
+- **Async parallel CVE fetching** via `Promise.all` across all packages.
+- **Input validation** on file uploads — only `.json` accepted, max 5MB body limit.
+- **Render Production Ready**: Configured `trust proxy` for secure reverse routing and non-blocking database connections allowing instantaneous health check startup.
 
 ### 🎨 UI / UX
-- Premium dark cybersecurity aesthetic (DFX-inspired)
-- **Space Mono** monospace font for technical credibility
-- **Neon green (#00FF41)** brand color — instantly recognizable security tool feel
-- Animated D3 force graph with hover states, click events, drag physics
-- Slide-in `NodeDetailPanel` with CVE list, risk badge, attack path, remediation
-- Responsive layout — works on all screen sizes
+- Premium dark cybersecurity aesthetic (DFX-inspired).
+- **Space Mono** monospace font for technical credibility.
+- **Neon Orange (#FF6B00)** brand color — instantly recognizable security tool feel.
+- Animated D3 force graph with hover states, click events, drag physics.
+- Slide-in `NodeDetailPanel` with CVE list, risk badge, attack path, remediation.
+- Responsive layout — works on all screen sizes.
 
 ### 🌍 Impact
-- **Target users:** Security engineers, CISOs, DevSecOps teams at startups and mid-market companies
-- **Real-world validity:** Uses the same databases (NVD, OSV) that tools like Snyk and GitHub Dependabot use — but with visual attack simulation added
-- **Enterprise workflow compatible:** Accepts standard SBOM and package.json formats — zero workflow change required
-- **Replaces** $15,000/yr Snyk enterprise licenses for basic vulnerability scanning
+- **Target users:** Security engineers, CISOs, DevSecOps teams at startups and mid-market companies.
+- **Real-world validity:** Uses the same databases (NVD, OSV) that tools like Snyk and GitHub Dependabot use — but with visual attack simulation added.
+- **Enterprise workflow compatible:** Accepts standard SBOM and package.json formats — zero workflow change required.
+- **Replaces** $15,000/yr Snyk enterprise licenses for basic vulnerability scanning.
 
 ### 💰 Business Model
 
@@ -348,12 +347,12 @@ vulnmap-repo/
 
 ## 🔐 Security Hardening (Production-Ready)
 
-- `helmet()` — sets 11 security-critical HTTP headers (CSP, HSTS, X-Frame-Options, etc.)
-- Rate limiting — 100 req/15min per IP on all `/api/*` routes
-- File upload validation — only `.json`, max 5MB, memory storage (no disk write)
-- Environment variables — no secrets in code, `.env` in `.gitignore`
-- MongoDB TTL index — CVE cache auto-expires after 24h, always fresh data
-- Error boundaries — AI failures never crash the scan, always graceful fallback
+- `helmet()` — sets 11 security-critical HTTP headers (CSP, HSTS, X-Frame-Options, etc.).
+- Rate limiting — 100 req/15min per IP on all `/api/*` routes.
+- File upload validation — only `.json`, max 5MB, memory storage (no disk write).
+- Environment variables — no secrets in code, `.env` in `.gitignore`.
+- MongoDB TTL index — CVE cache auto-expires after 24h, always fresh data.
+- Error boundaries — AI failures never crash the scan, always graceful fallback.
 
 ---
 
