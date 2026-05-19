@@ -1,9 +1,9 @@
-# VulnMap 🔴 — Supply Chain Vulnerability Visualizer
+# VulnMap  — Supply Chain Vulnerability Visualizer
 
 > **"See your attack surface before attackers do."**
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel-black?style=for-the-badge&logo=vercel)](https://vulnmap.vercel.app)
-[![Backend](https://img.shields.io/badge/Backend-Railway-purple?style=for-the-badge)](https://vulnmap-server.up.railway.app)
+[![Backend](https://img.shields.io/badge/Backend-Render-purple?style=for-the-badge)](https://vulnmap-server.up.render.app)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 [![Stack](https://img.shields.io/badge/Stack-MERN%20%2B%20D3.js-blue?style=for-the-badge)](/)
 
