@@ -1,9 +1,21 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-@layer base {
-  body {
-    @apply bg-vulnmap-dark text-white font-sans;
-  }
+@theme {
+  --color-vulnmap-dark: #050505;
+  --color-vulnmap-card: #0a0a0a;
+  --color-vulnmap-border: #1F2937;
+  --color-brand-green: #00FF41;
+  --color-risk-critical: #DC2626;
+  --color-risk-high: #F97316;
+  --color-risk-medium: #EAB308;
+  --color-risk-low: #22C55E;
+  --color-risk-safe: #6B7280;
+  --font-family-sans: "Inter", sans-serif;
+  --font-family-mono: "Space Mono", monospace;
+}
+
+body {
+  background-color: var(--color-vulnmap-dark);
+  color: white;
+  font-family: var(--font-family-sans);
 }
