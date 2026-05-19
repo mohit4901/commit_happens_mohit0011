@@ -43,20 +43,10 @@ const Landing = () => {
           {/* Left Column */}
           <div className="p-8 lg:p-16 flex flex-col justify-center">
             
-            {/* Problem Statement 3 Hackathon Banner */}
-            <div className="border border-brand-green/30 bg-brand-green/5 p-5 mb-8 font-mono text-xs text-brand-green flex flex-col gap-2 rounded-sm max-w-xl">
-              <div className="font-bold uppercase tracking-wider flex items-center gap-2">
-                <Shield className="w-4 h-4 text-brand-green" /> HACKATHON TRACK: PROBLEM STATEMENT 3
-              </div>
-              <div className="text-gray-300 font-sans text-sm mt-1">
-                <strong>Cybersecurity Enterprise Web Tool</strong> — Supply Chain Vulnerability Visualizer
-              </div>
-              <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 mt-3 text-gray-400 text-[11px]">
-                <div className="flex items-center gap-1.5">✓ Manual & JSON/SBOM Upload</div>
-                <div className="flex items-center gap-1.5">✓ Trust-Chain Depth Mapping</div>
-                <div className="flex items-center gap-1.5">✓ Public CVE Overlay (NVD/OSV)</div>
-                <div className="flex items-center gap-1.5">✓ Exportable Risk Reports</div>
-              </div>
+            {/* Threat Intelligence Badge */}
+            <div className="inline-flex items-center gap-2 border border-vulnmap-border bg-[#0a0a0a] px-3 py-1.5 w-max mb-8">
+              <div className="w-1.5 h-1.5 rounded-full bg-brand-green animate-pulse"></div>
+              <span className="text-xs text-gray-300 uppercase tracking-widest">Supply Chain Threat Intelligence</span>
             </div>
 
             <h1 className="text-4xl lg:text-6xl font-mono font-bold leading-tight mb-8">
@@ -124,31 +114,108 @@ const Landing = () => {
           </div>
         </div>
 
-        {/* How It Works Section */}
+        {/* System Pipeline Diagram Section */}
         <section className="mb-24">
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-mono font-bold mb-4 uppercase">How DFX VulnMap Works</h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">From a simple JSON upload to a comprehensive, CISO-ready security brief in three steps.</p>
+            <h2 className="text-3xl lg:text-4xl font-mono font-bold mb-4 uppercase">SYSTEM PIPELINE & ARCHITECTURE</h2>
+            <p className="text-gray-400 max-w-2xl mx-auto">See exactly what you input into VulnMap and the security intelligence it produces.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-            <div className="bg-[#0a0a0a] border border-vulnmap-border p-8 relative z-10">
-              <div className="text-brand-green font-mono text-xl mb-4">01. INGEST</div>
-              <h3 className="text-2xl font-bold mb-4">Upload Stack</h3>
-              <p className="text-gray-400">Drag and drop your <code className="bg-vulnmap-dark px-1 text-white">package.json</code> or standard SBOM. We parse dependencies and map the trust chain instantly.</p>
-            </div>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch relative">
             
-            <div className="bg-[#0a0a0a] border border-vulnmap-border p-8 relative z-10">
-              <div className="text-brand-green font-mono text-xl mb-4">02. ANALYZE</div>
-              <h3 className="text-2xl font-bold mb-4">Live CVE Fetch</h3>
-              <p className="text-gray-400">We hit NVD and OSV government databases in real-time, pulling CVSS scores and mapping them to a D3.js force graph.</p>
+            {/* Step 1: Inputs */}
+            <div className="border border-vulnmap-border bg-[#0a0a0a] p-8 flex flex-col justify-between">
+              <div>
+                <div className="text-brand-green font-mono text-xs uppercase tracking-widest mb-4">STAGE 01 // DECLARED INPUTS</div>
+                <h3 className="text-2xl font-bold font-mono mb-4 text-white">TECH STACK INGESTION</h3>
+                <p className="text-gray-400 text-sm mb-6">Ingest your software dependencies, API integrations, and cloud architectures.</p>
+                
+                <ul className="space-y-3 text-xs font-mono text-gray-300">
+                  <li className="flex items-center gap-2 border border-vulnmap-border p-3 bg-[#050505]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-green"></span>
+                    Manual Entry (Libraries, SaaS tools)
+                  </li>
+                  <li className="flex items-center gap-2 border border-vulnmap-border p-3 bg-[#050505]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-green"></span>
+                    package.json (Node.js) / requirements.txt (Python)
+                  </li>
+                  <li className="flex items-center gap-2 border border-vulnmap-border p-3 bg-[#050505]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-green"></span>
+                    SBOM Upload (CycloneDX / SPDX JSON)
+                  </li>
+                  <li className="flex items-center gap-2 border border-vulnmap-border p-3 bg-[#050505]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-green"></span>
+                    Declared SaaS Tools, APIs, & Cloud Services
+                  </li>
+                </ul>
+              </div>
+              <div className="text-brand-green text-xs font-mono mt-8 border-t border-vulnmap-border pt-4">
+                → FORWARDING METADATA TO PIPELINE
+              </div>
             </div>
 
-            <div className="bg-[#0a0a0a] border border-vulnmap-border p-8 relative z-10">
-              <div className="text-brand-green font-mono text-xl mb-4">03. SIMULATE</div>
-              <h3 className="text-2xl font-bold mb-4">AI Attack Paths</h3>
-              <p className="text-gray-400">Our multi-model AI (NVIDIA NIM) generates plain-English narratives showing exactly how an attacker would exploit your stack.</p>
+            {/* Step 2: Engine/Analysis */}
+            <div className="border border-brand-green bg-[#0a0a0a] p-8 flex flex-col justify-between relative shadow-[0_0_30px_rgba(0,255,65,0.05)]">
+              <div>
+                <div className="text-brand-green font-mono text-xs uppercase tracking-widest mb-4">STAGE 02 // PLATFORM ANALYSIS</div>
+                <h3 className="text-2xl font-bold font-mono mb-4 text-white">ANALYSIS ENGINE</h3>
+                <p className="text-gray-400 text-sm mb-6">VulnMap cross-references libraries with live CVE feeds and maps deep nested linkages.</p>
+                
+                <ul className="space-y-3 text-xs font-mono text-gray-300">
+                  <li className="flex items-center gap-2 border border-brand-green/20 p-3 bg-[#050505]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-green animate-pulse"></span>
+                    Real-time CVE Queries (NVD & OSV Databases)
+                  </li>
+                  <li className="flex items-center gap-2 border border-brand-green/20 p-3 bg-[#050505]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-green animate-pulse"></span>
+                    Trust-Chain Depth Mapping
+                  </li>
+                  <li className="flex items-center gap-2 border border-brand-green/20 p-3 bg-[#050505]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-green animate-pulse"></span>
+                    Transitive Relationship Tracking
+                  </li>
+                  <li className="flex items-center gap-2 border border-brand-green/20 p-3 bg-[#050505]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-green animate-pulse"></span>
+                    Overall Risk Scoring & Impact Evaluation
+                  </li>
+                </ul>
+              </div>
+              <div className="text-brand-green text-xs font-mono mt-8 border-t border-brand-green/20 pt-4">
+                * RUNNING SIMULATION ENGINES
+              </div>
             </div>
+
+            {/* Step 3: Outputs */}
+            <div className="border border-vulnmap-border bg-[#0a0a0a] p-8 flex flex-col justify-between">
+              <div>
+                <div className="text-brand-green font-mono text-xs uppercase tracking-widest mb-4">STAGE 03 // EXPECTED OUTPUTS</div>
+                <h3 className="text-2xl font-bold font-mono mb-4 text-white">THREAT DELIVERABLES</h3>
+                <p className="text-gray-400 text-sm mb-6">Generates the visual tools and mitigation roadmaps your security team needs.</p>
+                
+                <ul className="space-y-3 text-xs font-mono text-gray-300">
+                  <li className="flex items-center gap-2 border border-vulnmap-border p-3 bg-[#050505]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-green"></span>
+                    Interactive Dependency Graph (D3.js)
+                  </li>
+                  <li className="flex items-center gap-2 border border-vulnmap-border p-3 bg-[#050505]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-green"></span>
+                    CVE Threat Index Overlays
+                  </li>
+                  <li className="flex items-center gap-2 border border-vulnmap-border p-3 bg-[#050505]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-green"></span>
+                    AI-Simulated Attack Path Narrative
+                  </li>
+                  <li className="flex items-center gap-2 border border-vulnmap-border p-3 bg-[#050505]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-green"></span>
+                    Exportable Risk Summary Report
+                  </li>
+                </ul>
+              </div>
+              <div className="text-brand-green text-xs font-mono mt-8 border-t border-vulnmap-border pt-4">
+                ✔ AUDIT COMPLETION REPORT GENERATED
+              </div>
+            </div>
+
           </div>
         </section>
 
