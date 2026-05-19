@@ -90,7 +90,7 @@ const Landing = () => {
             <img 
               src="/fingerprint.png" 
               alt="Digital Fingerprint" 
-              className="max-h-[500px] object-contain dark:mix-blend-screen mix-blend-multiply opacity-100 dark:opacity-80 invert dark:invert-0 animate-[pulse_4s_ease-in-out_infinite]"
+              className="max-h-[500px] object-contain dark:mix-blend-screen opacity-100 dark:opacity-80 invert dark:invert-0 animate-[pulse_4s_ease-in-out_infinite]"
             />
             
             {/* Trusted By - Absolute positioned at bottom right */}
