@@ -23,7 +23,7 @@ The problem is not that companies don't care — it's that **they can't see thei
 
 ---
 
-## 🎯 What VulnMap Does — Plain English
+## 🎯 What VulnMap Does 
 
 Think of your company's tech stack as a chain. Each link is a package your team uses — `lodash`, `express`, `axios`, `log4j`. 
 
@@ -102,19 +102,8 @@ This guarantees **100% scanning runtime reliability** under all API conditions.
 
 ---
 
-## 🎨 Premium Visual Enhancements
 
-VulnMap features an ultra-premium **Cyberpunk Black & Orange** aesthetic, locking down all page components to a sleek, modern visual interface:
-
-1. **Brand Theme Locking**: Locked completely to `#05070B` (cyberpunk black) and `#FF6B00` (neon orange accents) across primary buttons, highlights, badges, and interfaces.
-2. **Infinite Marquee SVG Scroller**: A continuous, seamless horizontal marquee looping custom, high-fidelity SVGs representing top tech brands (`OneDrive`, `Dropbox`, `MEGA`, `Box`, `PayPal`, `Walmart`, `Tencent`). Logos render in 100% white, full-opacity with dynamic hover glowing effects and rotation animation.
-3. **Live Threat Simulator Terminal**: An active self-typing CLI terminal console (`TerminalDemo`) displaying simulated CycloneDX SBOM ingestion, threat containment alerts, transitive vulnerability scans, and AI attack paths in real-time.
-4. **Scroll-triggered Opacity Reveal**: The core value statement features a customized viewport scroll engine splitting sentences word-by-word, fading in word-by-word from `0.15` to `1.0` opacity.
-5. **High-Contrast Digital Fingerprint Canvas**: Features a highly visible digital security canvas rendering perfectly in both dark and modern configurations without visual overlaps.
-
----
-
-## 🔥 The "Wow" Demo Flow — What Judges Will See
+## 🔥 The "Wow" Demo Flow 
 
 1. Judge opens the app → **Sleek Cyberpunk Threat Terminal & Infinite Marquee** loop immediately.
 2. Clicks **"GET A DEMO"** → pre-loaded `package.json` with `lodash@4.17.4`, `log4j@2.14.1`, `axios@0.21.0` etc.
@@ -159,35 +148,7 @@ VulnMap features an ultra-premium **Cyberpunk Black & Orange** aesthetic, lockin
 
 ---
 
-## 🧠 Hackathon Pitch & Idea Breakdown
 
-> *"Apni company ka sabse kamzor link — 30 second mein dhundh lo"*
-
-**Core Problem:** Companies breach hoti hain apne vendor ke through — ek compromised open-source package se. Security teams ke paas koi unified view nahi hota ki dependencies kahan connect ho rahi hain aur weakest link kaunsa hai.
-
-**Unique Angle (Secret Weapon):** Real CVE fetching + AI "Attack Path Simulator" jo judge ko saamne live dikhayega: *"Agar yeh npm package compromise ho jaye to attacker tumhare AWS S3 bucket tak 3 hops mein pahunch sakta hai"*. Yeh abhi tak kisi ne nahi banaya.
-
-**Wow Moment (Demo):** JSON/SBOM file upload karo → 5 second mein interactive dependency graph appear hoga — red nodes (CVE wale), yellow (medium risk), green (safe). Ek red node pe click karo → right panel mein CVE details, exploit history, AI generated attack story. Ek recommendation. *Judge bolega: No-playing.*
-
-**Psychological Hook:** Boardroom logic 🤝 D3.js. Har judge chahta hai yeh attack live hote huye dekhna. Tu live chize dekhayega ki unki khud ki company ka tech stack kitna unsafe hai — aur humara brand "Dfx" unhe bacha lega.
-
-**What Others Won't Build:** Sirf ek static table banayenge CVE list ke sath. Tu banayega:
-1. Interactive D3.js force graph
-2. Trust chain depth visualization (kitne layers deep hai vulnerability)
-3. AI attack path narrative
-4. Exportable risk report PDF. Yeh combination koi nahi banayega.
-
-**AI Usage (Real):**
-1. **Attack path generation:** Given a vulnerable node, AI explains how realistic breach spread.
-2. **Executive summary:** Non-technical CTO ke liye 2-3 line plain English report.
-
-**Scalability:**
-- **Phase 1:** Manual JSON/SBOM upload.
-- **Phase 2:** GitHub repo direct connect (auto-scan packages on PR/commits).
-- **Phase 3:** CI/CD pipeline integration.
-- **Phase 4:** Real-time monitoring with Slack alerts.
-
----
 
 ## 🛠️ MERN Tech Split
 
@@ -201,18 +162,6 @@ VulnMap features an ultra-premium **Cyberpunk Black & Orange** aesthetic, lockin
 * **Deploy:** Backend → Railway. Frontend → Vercel. DB → MongoDB Atlas free tier. NVD + OSV → free public APIs. Total cost: $0.
 
 ---
-
-## 📊 Evaluation Criteria Alignment
-
-### 🔬 Engineering Rigor & Render Resilience
-- **MERN stack** with full separation of concerns (routes → services → models).
-- **Mongoose schema** with TTL-indexed CVE cache (auto-expires stale data).
-- **Helmet.js** HTTP security headers + **express-rate-limit** (100 req/15min) on all API routes.
-- **Error boundary** — every AI call has try/catch with graceful degradation.
-- **Async parallel CVE fetching** via `Promise.all` across all packages.
-- **Input validation** on file uploads — only `.json` accepted, max 5MB body limit.
-- **Render Production Ready**: Configured `trust proxy` for secure reverse routing and non-blocking database connections allowing instantaneous health check startup.
-
 ### 🎨 UI / UX
 - Premium dark cybersecurity aesthetic (DFX-inspired).
 - **Space Mono** monospace font for technical credibility.
