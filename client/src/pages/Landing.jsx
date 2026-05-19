@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { Shield } from 'lucide-react';
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const Landing = () => {
   };
 
   return (
-    <div className="min-h-screen bg-vulnmap-dark text-white font-sans flex flex-col items-center">
+    <div className="min-h-screen bg-[#050505] text-white font-sans flex flex-col items-center">
       <div className="w-full max-w-7xl p-4 lg:p-8">
         
         {/* Navbar */}
@@ -42,9 +43,20 @@ const Landing = () => {
           {/* Left Column */}
           <div className="p-8 lg:p-16 flex flex-col justify-center">
             
-            <div className="inline-flex items-center gap-2 border border-vulnmap-border bg-[#0a0a0a] px-3 py-1.5 w-max mb-8">
-              <div className="w-1.5 h-1.5 rounded-full bg-brand-green animate-pulse"></div>
-              <span className="text-xs text-gray-300 uppercase tracking-widest">The №1 choice for enterprise cybersecurity</span>
+            {/* Problem Statement 3 Hackathon Banner */}
+            <div className="border border-brand-green/30 bg-brand-green/5 p-5 mb-8 font-mono text-xs text-brand-green flex flex-col gap-2 rounded-sm max-w-xl">
+              <div className="font-bold uppercase tracking-wider flex items-center gap-2">
+                <Shield className="w-4 h-4 text-brand-green" /> HACKATHON TRACK: PROBLEM STATEMENT 3
+              </div>
+              <div className="text-gray-300 font-sans text-sm mt-1">
+                <strong>Cybersecurity Enterprise Web Tool</strong> — Supply Chain Vulnerability Visualizer
+              </div>
+              <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 mt-3 text-gray-400 text-[11px]">
+                <div className="flex items-center gap-1.5">✓ Manual & JSON/SBOM Upload</div>
+                <div className="flex items-center gap-1.5">✓ Trust-Chain Depth Mapping</div>
+                <div className="flex items-center gap-1.5">✓ Public CVE Overlay (NVD/OSV)</div>
+                <div className="flex items-center gap-1.5">✓ Exportable Risk Reports</div>
+              </div>
             </div>
 
             <h1 className="text-4xl lg:text-6xl font-mono font-bold leading-tight mb-8">
