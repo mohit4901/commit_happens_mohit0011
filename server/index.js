@@ -46,10 +46,18 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log('Connected to MongoDB');
-  })
-  .catch(err => {
-    console.error('MongoDB connection error:', err);
-  });
+if (!process.env.MONGO_URI) {
+  console.warn('================================================================');
+  console.warn('WARNING: MONGO_URI environment variable is not defined.');
+  console.warn('Database features will be unavailable. Please add MONGO_URI');
+  console.warn('in your Render Service Environment Variables to connect.');
+  console.warn('================================================================');
+} else {
+  mongoose.connect(process.env.MONGO_URI)
+    .then(() => {
+      console.log('Connected to MongoDB Atlas successfully.');
+    })
+    .catch(err => {
+      console.error('MongoDB connection error during runtime:', err);
+    });
+}
