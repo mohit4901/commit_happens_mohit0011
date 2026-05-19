@@ -104,6 +104,123 @@ const Landing = () => {
           </div>
         </main>
 
+        {/* Trusted Partners / Client Logos Bar */}
+        <div className="border border-vulnmap-border bg-vulnmap-card py-6 px-8 mb-16 flex flex-wrap justify-between items-center gap-6 opacity-60 text-brand-text font-mono text-xs select-none">
+          <span className="font-bold tracking-tight hover:opacity-100 transition cursor-default">OneDrive</span>
+          <span className="font-bold tracking-tight hover:opacity-100 transition cursor-default">Dropbox</span>
+          <span className="font-bold tracking-tight hover:opacity-100 transition cursor-default">MEGA</span>
+          <span className="font-bold tracking-tight hover:opacity-100 transition cursor-default">box</span>
+          <span className="font-bold tracking-tight hover:opacity-100 transition cursor-default">PayPal</span>
+          <span className="font-bold tracking-tight hover:opacity-100 transition cursor-default">Walmart</span>
+          <span className="font-bold tracking-tight hover:opacity-100 transition cursor-default">Tencent</span>
+        </div>
+
+        {/* Core Value Statement Section */}
+        <section className="mb-24 py-12 border-b border-vulnmap-border">
+          <p className="text-2xl md:text-3xl lg:text-4xl font-sans font-light leading-relaxed max-w-4xl text-gray-400 dark:text-gray-500">
+            <span className="text-brand-text font-semibold">We’ve helped businesses eliminate critical vulnerabilities,</span>{' '}
+            respond to breaches in record time, and achieve full regulatory compliance — delivering precise, high-impact security solutions where they matter most.
+          </p>
+        </section>
+
+        {/* Key Challenges We Solve Section */}
+        <section className="mb-24">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-12">
+            <div className="lg:col-span-1">
+              <span className="text-xs font-mono uppercase tracking-widest text-gray-500">Case Studies</span>
+            </div>
+            <div className="lg:col-span-3">
+              <h2 className="text-3xl md:text-4xl font-sans font-medium text-brand-text">Key Challenges We Solve.</h2>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Card 1 */}
+            <div className="border border-vulnmap-border bg-vulnmap-card p-8 flex flex-col justify-between hover:border-gray-400 transition duration-300">
+              <div>
+                <h4 className="text-lg font-mono font-bold mb-4 text-brand-text">Slow Incident Response</h4>
+                <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed font-sans">
+                  Without rapid containment, attackers can escalate breaches—leading to data loss, financial damage, and reputational harm.
+                </p>
+              </div>
+              <div>
+                <svg viewBox="0 0 100 100" className="w-28 h-28 mx-auto my-8 opacity-30 dark:opacity-20 stroke-current text-brand-text">
+                  <circle cx="50" cy="50" r="40" fill="none" strokeWidth="0.5" />
+                  <ellipse cx="50" cy="50" rx="40" ry="12" fill="none" strokeWidth="0.5" />
+                  <ellipse cx="50" cy="50" rx="12" ry="40" fill="none" strokeWidth="0.5" />
+                  <ellipse cx="50" cy="50" rx="40" ry="24" fill="none" strokeWidth="0.5" />
+                  <ellipse cx="50" cy="50" rx="24" ry="40" fill="none" strokeWidth="0.5" />
+                  <line x1="50" y1="10" x2="50" y2="90" strokeWidth="0.5" />
+                  <line x1="10" y1="50" x2="90" y2="50" strokeWidth="0.5" />
+                </svg>
+                <button 
+                  onClick={() => navigate('/contact')}
+                  className="w-full py-3 border border-vulnmap-border bg-transparent hover:border-brand-green font-mono text-xs font-bold text-brand-text transition flex items-center justify-between px-4 uppercase cursor-pointer"
+                >
+                  <span>Look How We Solve This</span>
+                  <span>↗</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Card 2 (Highlighted) */}
+            <div className="border border-risk-critical bg-vulnmap-card p-8 flex flex-col justify-between shadow-[0_0_30px_rgba(239,68,68,0.1)] hover:shadow-[0_0_40px_rgba(239,68,68,0.15)] transition duration-300">
+              <div>
+                <h4 className="text-lg font-mono font-bold mb-4 text-risk-critical">Undetected Vulnerabilities</h4>
+                <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed font-sans">
+                  Automated scans and generic security miss deep, exploitable weaknesses, making your critical assets an easy target.
+                </p>
+              </div>
+              <div>
+                <svg viewBox="0 0 100 100" className="w-28 h-28 mx-auto my-8 stroke-current text-risk-critical animate-[spin_30s_linear_infinite]">
+                  <circle cx="50" cy="50" r="40" fill="none" strokeWidth="0.6" />
+                  <ellipse cx="50" cy="50" rx="40" ry="12" fill="none" strokeWidth="0.6" />
+                  <ellipse cx="50" cy="50" rx="12" ry="40" fill="none" strokeWidth="0.6" />
+                  <ellipse cx="50" cy="50" rx="40" ry="24" fill="none" strokeWidth="0.6" />
+                  <ellipse cx="50" cy="50" rx="24" ry="40" fill="none" strokeWidth="0.6" />
+                  <line x1="50" y1="10" x2="50" y2="90" strokeWidth="0.6" />
+                  <line x1="10" y1="50" x2="90" y2="50" strokeWidth="0.6" />
+                </svg>
+                <button 
+                  onClick={() => navigate('/scan')}
+                  className="w-full py-3 bg-risk-critical text-white font-mono text-xs font-bold transition flex items-center justify-between px-4 uppercase hover:bg-red-700 cursor-pointer"
+                >
+                  <span>Look How We Solve This</span>
+                  <span>↗</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Card 3 */}
+            <div className="border border-vulnmap-border bg-vulnmap-card p-8 flex flex-col justify-between hover:border-gray-400 transition duration-300">
+              <div>
+                <h4 className="text-lg font-mono font-bold mb-4 text-brand-text">Regulatory Gaps</h4>
+                <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed font-sans">
+                  Incomplete compliance with PCI-DSS, HIPAA, or GDPR can result in audits, legal penalties, and operational shutdowns.
+                </p>
+              </div>
+              <div>
+                <svg viewBox="0 0 100 100" className="w-28 h-28 mx-auto my-8 opacity-30 dark:opacity-20 stroke-current text-brand-text">
+                  <circle cx="50" cy="50" r="40" fill="none" strokeWidth="0.5" />
+                  <ellipse cx="50" cy="50" rx="40" ry="12" fill="none" strokeWidth="0.5" />
+                  <ellipse cx="50" cy="50" rx="12" ry="40" fill="none" strokeWidth="0.5" />
+                  <ellipse cx="50" cy="50" rx="40" ry="24" fill="none" strokeWidth="0.5" />
+                  <ellipse cx="50" cy="50" rx="24" ry="40" fill="none" strokeWidth="0.5" />
+                  <line x1="50" y1="10" x2="50" y2="90" strokeWidth="0.5" />
+                  <line x1="10" y1="50" x2="90" y2="50" strokeWidth="0.5" />
+                </svg>
+                <button 
+                  onClick={() => navigate('/contact')}
+                  className="w-full py-3 border border-vulnmap-border bg-transparent hover:border-brand-green font-mono text-xs font-bold text-brand-text transition flex items-center justify-between px-4 uppercase cursor-pointer"
+                >
+                  <span>Look How We Solve This</span>
+                  <span>↗</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-24">
           <div className="border border-vulnmap-border p-8" style={cardStyle}>
@@ -237,7 +354,7 @@ const Landing = () => {
           </p>
           <button 
             onClick={() => navigate('/scan')}
-            className="bg-brand-green text-white dark:text-black px-10 py-4 font-mono font-bold hover:bg-brand-green-hover transition text-lg uppercase tracking-widest"
+            className="bg-brand-green text-white dark:text-black px-10 py-4 font-mono font-bold hover:bg-brand-green-hover transition text-lg uppercase tracking-widest cursor-pointer"
           >
             Start Your First Scan Now
           </button>
