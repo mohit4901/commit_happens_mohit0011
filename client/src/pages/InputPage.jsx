@@ -7,6 +7,44 @@ import sampleStackData from '../../../demo/sample-stack.json';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
+const parseStackJson = (json) => {
+  let list = [];
+  let name = json.name || '';
+
+  // 1. CycloneDX SBOM format
+  if (json.components && Array.isArray(json.components)) {
+    list = json.components.map(c => ({
+      name: c.name,
+      version: c.version || '0.0.0',
+      type: c.type || 'library'
+    }));
+  }
+  // 2. SPDX SBOM format
+  else if (json.packages && Array.isArray(json.packages)) {
+    list = json.packages.map(p => ({
+      name: p.name,
+      version: p.versionInfo || p.version || '0.0.0',
+      type: 'library'
+    }));
+  }
+  // 3. package.json format
+  else if (json.dependencies || json.devDependencies) {
+    const deps = json.dependencies || {};
+    const devDeps = json.devDependencies || {};
+    const allDeps = { ...deps, ...devDeps };
+    list = Object.keys(allDeps).map(name => ({
+      name,
+      version: allDeps[name].replace(/[\^~><=]/g, '').split(' ')[0],
+      type: 'npm'
+    }));
+  }
+
+  return {
+    name: name || (json.bomFormat ? 'SBOM Stack' : 'Tech Stack'),
+    packages: list.filter(p => p.name).slice(0, 15)
+  };
+};
+
 const InputPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -64,19 +102,9 @@ const InputPage = () => {
       reader.onload = (event) => {
         try {
           const json = JSON.parse(event.target.result);
-          if (json.name) setStackNameLocal(json.name);
-          if (json.packages) setPackages(json.packages);
-          else if (json.dependencies || json.devDependencies) {
-            const deps = json.dependencies || {};
-            const devDeps = json.devDependencies || {};
-            const allDeps = { ...deps, ...devDeps };
-            const parsedDeps = Object.keys(allDeps).map(name => ({
-              name,
-              version: allDeps[name].replace(/[\^~><=]/g, '').split(' ')[0],
-              type: 'npm'
-            }));
-            setPackages(parsedDeps.slice(0, 15));
-          }
+          const result = parseStackJson(json);
+          setStackNameLocal(result.name);
+          setPackages(result.packages);
         } catch (err) {
           setError('Invalid JSON file');
         }
@@ -197,18 +225,9 @@ const InputPage = () => {
                   reader.onload = (ev) => {
                     try {
                       const json = JSON.parse(ev.target.result);
-                      if(json.dependencies || json.devDependencies) {
-                        const deps = json.dependencies || {};
-                        const devDeps = json.devDependencies || {};
-                        const allDeps = { ...deps, ...devDeps };
-                        const parsedDeps = Object.keys(allDeps).map(name => ({
-                          name,
-                          version: allDeps[name].replace(/[\^~><=]/g, '').split(' ')[0],
-                          type: 'npm'
-                        }));
-                        setPackages(parsedDeps.slice(0, 15));
-                      }
-                      if(json.name) setStackNameLocal(json.name);
+                      const result = parseStackJson(json);
+                      setStackNameLocal(result.name);
+                      setPackages(result.packages);
                     } catch(err){}
                   };
                   reader.readAsText(e.target.files[0]);
