@@ -106,14 +106,26 @@ const Landing = () => {
         </main>
 
         {/* Trusted Partners / Client Logos Bar */}
-        <div className="border border-vulnmap-border bg-vulnmap-card py-6 px-8 mb-16 flex flex-wrap justify-between items-center gap-6 opacity-60 text-brand-text font-mono text-xs select-none">
-          <span className="font-bold tracking-tight hover:opacity-100 transition cursor-default">OneDrive</span>
-          <span className="font-bold tracking-tight hover:opacity-100 transition cursor-default">Dropbox</span>
-          <span className="font-bold tracking-tight hover:opacity-100 transition cursor-default">MEGA</span>
-          <span className="font-bold tracking-tight hover:opacity-100 transition cursor-default">box</span>
-          <span className="font-bold tracking-tight hover:opacity-100 transition cursor-default">PayPal</span>
-          <span className="font-bold tracking-tight hover:opacity-100 transition cursor-default">Walmart</span>
-          <span className="font-bold tracking-tight hover:opacity-100 transition cursor-default">Tencent</span>
+        <div className="border-y border-vulnmap-border bg-vulnmap-card py-6 mb-16 overflow-hidden relative w-full select-none">
+          <div className="animate-marquee gap-24 items-center opacity-65 text-brand-text font-mono text-xs">
+            {/* First Set */}
+            <span className="font-bold tracking-tight mx-4 hover:text-brand-green transition cursor-default uppercase">OneDrive</span>
+            <span className="font-bold tracking-tight mx-4 hover:text-brand-green transition cursor-default uppercase">Dropbox</span>
+            <span className="font-bold tracking-tight mx-4 hover:text-brand-green transition cursor-default uppercase">MEGA</span>
+            <span className="font-bold tracking-tight mx-4 hover:text-brand-green transition cursor-default uppercase">box</span>
+            <span className="font-bold tracking-tight mx-4 hover:text-brand-green transition cursor-default uppercase">PayPal</span>
+            <span className="font-bold tracking-tight mx-4 hover:text-brand-green transition cursor-default uppercase">Walmart</span>
+            <span className="font-bold tracking-tight mx-4 hover:text-brand-green transition cursor-default uppercase">Tencent</span>
+            
+            {/* Second Set (Duplicate for seamless scroll) */}
+            <span className="font-bold tracking-tight mx-4 hover:text-brand-green transition cursor-default uppercase">OneDrive</span>
+            <span className="font-bold tracking-tight mx-4 hover:text-brand-green transition cursor-default uppercase">Dropbox</span>
+            <span className="font-bold tracking-tight mx-4 hover:text-brand-green transition cursor-default uppercase">MEGA</span>
+            <span className="font-bold tracking-tight mx-4 hover:text-brand-green transition cursor-default uppercase">box</span>
+            <span className="font-bold tracking-tight mx-4 hover:text-brand-green transition cursor-default uppercase">PayPal</span>
+            <span className="font-bold tracking-tight mx-4 hover:text-brand-green transition cursor-default uppercase">Walmart</span>
+            <span className="font-bold tracking-tight mx-4 hover:text-brand-green transition cursor-default uppercase">Tencent</span>
+          </div>
         </div>
 
         {/* Core Value Statement Section */}
